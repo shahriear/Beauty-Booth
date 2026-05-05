@@ -5,6 +5,10 @@ import TopCategories from './components/TopCategories';
 import Trending from './components/Trending';
 import ComboOffers from './components/ComboOffers';
 import BoishakhiOffer from './components/BoishakhiOffer';
+import BestOfferBrands from './components/BestOfferBrands';
+import Top3OfBeauty from './components/Top3OfBeauty';
+import FreeDeliveryAvailable from './components/FreeDeliveryAvailable';
+import BestOfSkincare from './components/BestOfSkincare';
 
 export default function Home() {
   return (
@@ -16,6 +20,10 @@ export default function Home() {
       <Trending />
       <ComboOffers />
       <BoishakhiOffer />
+      <BestOfferBrands />
+      <Top3OfBeauty />
+      <FreeDeliveryAvailable />
+      <BestOfSkincare />
     </div>
   );
 }

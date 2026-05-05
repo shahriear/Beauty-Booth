@@ -242,7 +242,7 @@ export default function BoishakhiOffer() {
               <div className="w-full h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
                 <span className="text-gray-400 text-sm">Product Image</span>
 
-                {/* 🔴 SALE BADGE */}
+                {/*  SALE BADGE */}
                 <span className="absolute top-3 left-3 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full transition-all duration-300 group-hover:opacity-0 group-hover:scale-90">
                   {product.badge}
                 </span>
@@ -250,8 +250,8 @@ export default function BoishakhiOffer() {
                 {/* ➕ ADD BUTTON */}
                 <button
                   className="absolute top-3 right-3 w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center text-xl shadow-lg 
-                  opacity-0 translate-y-[-10px] transition-all duration-300 
-                  group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110"
+                   opacity-0 translate-y-[-10px] transition-all duration-300 
+                   group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110"
                 >
                   +
                 </button>

@@ -52,7 +52,6 @@ const comboProducts = [
 
 export default function ComboOffers() {
   const [mounted, setMounted] = useState(false);
-  const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
     setMounted(true);
@@ -85,21 +84,20 @@ export default function ComboOffers() {
       <Slider {...settings}>
         {comboProducts.map(product => (
           <div key={product.id} className="px-2 pb-6">
-            <div
-              className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-grab"
-              onMouseEnter={() => setHoveredId(product.id)}
-              onMouseLeave={() => setHoveredId(null)}
-            >
+            <div className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-grab">
               {/* Product Image */}
-              <div className="w-full h-48 bg-gray-100 flex items-center justify-center relative">
+              <div className="w-full h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
                 <span className="text-gray-400 text-sm">Product Image</span>
 
-                {/* ✅ Badge (hide on hover) */}
-                {hoveredId !== product.id && (
-                  <span className="absolute top-3 left-3 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    {product.badge}
-                  </span>
-                )}
+                {/*  SALE BADGE */}
+                <span
+                  className="absolute top-3 left-3 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full 
+                transition-all duration-300 
+                group-hover:opacity-0 group-hover:scale-90"
+                >
+                  {product.badge}
+                </span>
+
               </div>
 
               {/* Product Info */}
@@ -130,7 +128,7 @@ export default function ComboOffers() {
         <img
           src="/images/bongoIMG.webp"
           alt="BOGO Madness"
-          className="w-full  object-cover"
+          className="w-full object-cover"
         />
       </div>
     </section>
