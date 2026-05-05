@@ -3,7 +3,8 @@ import Navbar from './components/Navbar';
 import Banner from './components/Banner';
 import TopCategories from './components/TopCategories';
 import Trending from './components/Trending';
-import OfferSection from './components/OfferSection';
+import ComboOffers from './components/ComboOffers';
+import BoishakhiOffer from './components/BoishakhiOffer';
 
 export default function Home() {
   return (
@@ -13,7 +14,8 @@ export default function Home() {
       <Banner />
       <TopCategories />
       <Trending />
-      <OfferSection />
+      <ComboOffers />
+      <BoishakhiOffer />
     </div>
   );
 }

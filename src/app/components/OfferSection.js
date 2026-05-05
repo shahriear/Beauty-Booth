@@ -76,10 +76,10 @@ export default function OfferSection() {
       <Slider {...settings}>
         {offers.map((offer, index) => (
           <div key={index} className="px-3">
-            <div className="group relative flex border border-2 border-orange-300 rounded-2xl overflow-hidden bg-white h-40 transition-all duration-300 hover:shadow-[0_0_25px_rgba(236,72,153,0.35)] cursor-pointer">
+            <div className="group relative flex border border-2 border-orange-300 rounded-2xl overflow-hidden bg-white h-40 transition-all duration-300  cursor-pointer">
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-r from-pink-100/40 to-purple-100/40"></div>
 
-              <div className="w-2/3 p-4 flex flex-col justify-between relative z-10">
+              <div className="w-2/3 p-4 flex flex-col justify-between relative z-10 bg-orange-50">
                 <h3 className="text-md font-bold text-gray-800">
                   {offer.title}
                 </h3>
@@ -88,11 +88,11 @@ export default function OfferSection() {
                 </p>
               </div>
 
-              <div className="border-l border-dashed border-orange-300 relative z-10"></div>
+              <div className="border-1 border-dashed border-orange-300 relative z-10"></div>
 
               <div className="w-1/3 flex flex-col items-center justify-center text-center p-4 relative z-10">
                 <p className="text-xs text-gray-500 mb-1">{offer.spend}</p>
-                <h2 className="text-2xl font-bold text-pink-500 group-hover:scale-110 transition">
+                <h2 className="text-2xl font-bold text-pink-500 group-hover:scale-105 transition">
                   {offer.highlight}
                 </h2>
                 <p className="text-xs text-gray-600 mt-1">{offer.label}</p>

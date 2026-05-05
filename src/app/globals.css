@@ -65,9 +65,9 @@ body {
 
 .slick-arrow {
   z-index: 10 !important;
-  width: 45px !important;
-  height: 45px !important;
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  width: 40px !important;
+  height: 40px !important;
+  background-color: rgba(109, 104, 104, 0.5) !important;
   border-radius: 50% !important;
   display: flex !important;
   align-items: center !important;
