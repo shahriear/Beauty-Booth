@@ -7,9 +7,9 @@ import OfferSection from './components/OfferSection';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white ">
-      <Header />
-      <Navbar />
+    <div className="min-h-screen bg-white container">
+      {/* <Header />
+      <Navbar /> */}
       <Banner />
       <TopCategories />
       <Trending />

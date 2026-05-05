@@ -7,10 +7,10 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-md py-4 px-6">
-      <div className="flex items-center justify-between gap-6">
+      <div className="flex items-center justify-between gap-6 container">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <div className="text-2xl font-bold text-purple-600">Beauty Booth</div>
+          <div className="text-2xl font-bold">Beauty Booth</div>
         </div>
 
         {/* Search Bar */}

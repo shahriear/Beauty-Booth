@@ -21,76 +21,96 @@ const menuItems = [
 
 export default function Navbar() {
   const scrollContainerRef = useRef(null);
+
   const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(true);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
+  // Fix hydration 
   useEffect(() => {
-    const handleScroll = () => {
-      if (scrollContainerRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } =
-          scrollContainerRef.current;
-        setShowLeftArrow(scrollLeft > 0);
-        setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
-      }
-    };
-
-    const container = scrollContainerRef.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      handleScroll();
-    }
-
-    return () => container?.removeEventListener('scroll', handleScroll);
+    setMounted(true);
   }, []);
 
-  const scroll = direction => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 200;
-      scrollContainerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      });
+  // Scroll detect
+  useEffect(() => {
+    if (!mounted) return;
+
+    const handleScroll = () => {
+      const el = scrollContainerRef.current;
+      if (!el) return;
+
+      const { scrollLeft, scrollWidth, clientWidth } = el;
+
+      setShowLeftArrow(scrollLeft > 5);
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 5);
+    };
+
+    const el = scrollContainerRef.current;
+    if (el) {
+      handleScroll();
+      el.addEventListener('scroll', handleScroll);
     }
+
+    return () => el?.removeEventListener('scroll', handleScroll);
+  }, [mounted]);
+
+  // Scroll function
+  const scroll = direction => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+
+    el.scrollBy({
+      left: direction === 'left' ? -200 : 200,
+      behavior: 'smooth',
+    });
   };
 
   return (
     <nav className="sticky top-0 z-40 bg-white shadow-md">
-      <div className="relative flex items-center px-6 py-3">
+      <div className="relative flex items-center px-6 py-3 container mx-auto">
         {/* Left Arrow */}
-        {showLeftArrow && (
-          <button
-            onClick={() => scroll('left')}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-100 p-2 rounded-r-full shadow transition"
-          >
-            ❮
-          </button>
-        )}
+        <button
+          onClick={() => scroll('left')}
+          className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 
+          w-10 h-10 flex items-center justify-center
+          bg-white rounded-full shadow-md border border-gray-200
+          transition-all duration-300
+          hover:bg-gray-100 hover:shadow-lg
+          ${mounted && showLeftArrow ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        >
+          <span className="text-sm text-gray-500">❮</span>
+        </button>
 
         {/* Menu Items */}
         <div
           ref={scrollContainerRef}
           className="flex gap-6 overflow-x-auto whitespace-nowrap px-12 py-2 scroll-smooth scrollbar-hide"
-          style={{ scrollBehavior: 'smooth' }}
         >
-          {menuItems.map((item, index) => (
+          {menuItems.map(item => (
             <button
-              key={index}
-              className="text-gray-700 hover:text-purple-600 hover:font-semibold transition text-sm font-medium flex-shrink-0 py-2"
+              key={item}
+              className="relative group text-gray-700 text-sm font-medium flex-shrink-0 py-2 px-1 transition-all duration-300 hover:text-purple-600"
             >
               {item}
+
+              {/* underline animation */}
+              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-purple-600 transition-all duration-300 group-hover:w-full"></span>
             </button>
           ))}
         </div>
 
         {/* Right Arrow */}
-        {showRightArrow && (
-          <button
-            onClick={() => scroll('right')}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-100 p-2 rounded-l-full shadow transition"
-          >
-            ❯
-          </button>
-        )}
+        <button
+          onClick={() => scroll('right')}
+          className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 
+          w-10 h-10 flex items-center justify-center
+          bg-white rounded-full shadow-md border border-gray-200
+          transition-all duration-300
+          hover:bg-gray-100 hover:shadow-lg
+          ${mounted && showRightArrow ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        >
+          <span className="text-sm text-gray-500">❯</span>
+        </button>
       </div>
     </nav>
   );
