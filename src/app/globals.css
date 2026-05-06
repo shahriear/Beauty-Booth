@@ -134,3 +134,18 @@ body {
   -ms-overflow-style: none; 
   scrollbar-width: none;    
 }
+/* ------------ */
+.swiper-slide {
+  transition: all 0.4s ease;
+}
+
+.swiper-slide-active {
+  transform: scale(1.15);
+  z-index: 10;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  transform: scale(0.9);
+  opacity: 0.5;
+}

@@ -9,6 +9,8 @@ import BestOfferBrands from './components/BestOfferBrands';
 import Top3OfBeauty from './components/Top3OfBeauty';
 import FreeDeliveryAvailable from './components/FreeDeliveryAvailable';
 import BestOfSkincare from './components/BestOfSkincare';
+import FeaturedInVideos from './components/FeaturedInVideos';
+import FlatSalesPercentage from './components/FlatSalesPercentage';
 
 export default function Home() {
   return (
@@ -24,6 +26,8 @@ export default function Home() {
       <Top3OfBeauty />
       <FreeDeliveryAvailable />
       <BestOfSkincare />
+      <FeaturedInVideos />
+      <FlatSalesPercentage />
     </div>
   );
 }
