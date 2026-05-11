@@ -26,7 +26,6 @@
 } */
 
 body {
-  
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
@@ -72,10 +71,9 @@ body {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  
 }
 .slick-prev {
-  left: 15px !important;   
+  left: 15px !important;
 }
 
 .slick-next {
@@ -131,8 +129,8 @@ body {
 }
 
 .scrollbar-hide {
-  -ms-overflow-style: none; 
-  scrollbar-width: none;    
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 /* ------------ */
 .swiper-slide {
@@ -159,4 +157,344 @@ body {
     transform: scale(1);
     opacity: 1;
   }
+}
+
+/* -----------------------------------------------------
+/* videos */
+/* ------------------------------------------------------ */
+.featured-videos {
+  background: #fff;
+
+  
+}
+
+.featured-videos-head {
+  display: flex;
+  /* justify-content: center; */
+  margin-bottom: 15px;
+  font-family:sans-serif;
+}
+
+.featured-videos-head h3 {
+  font-size: 38px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.video-stage {
+  position: relative;
+  height: 620px;
+  overflow: hidden;
+  display: grid;
+  place-items: start center;
+}
+
+.video-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -165px;
+  width: 240px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  transition:
+    transform 650ms ease,
+    opacity 650ms ease;
+  cursor: grab;
+  user-select: none;
+}
+
+.video-card.dragging {
+  cursor: grabbing;
+}
+
+.video-frame {
+  position: relative;
+  width:100%;
+  height: 450px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+}
+
+.video-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 66px;
+  height: 66px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+
+.video-mute {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  border: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+
+.video-play:hover,
+.video-mute:hover {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.video-product-row {
+  margin-top: 10px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.video-product-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.video-product-meta img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.video-product-category {
+  margin: 0 0 5px;
+  font-size: 13px;
+  color: #5a5a5a;
+}
+
+.video-product-price {
+  margin: 0;
+  color: #111827;
+  font-weight: 700;
+}
+
+.video-product-price s {
+  margin-left: 7px;
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.video-arrow {
+  font-size: 23px;
+  color: #111827;
+  line-height: 1;
+}
+
+.content {
+  margin-top: 0;
+}
+
+.content p {
+  margin-top: 10px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 28px 30px 100px;
+  margin-top: 0;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.footer h4 {
+  margin: 0 0 10px;
+}
+
+.footer p,
+.footer a {
+  margin: 0 0 8px;
+  color: #4b5563;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+}
+
+.mobile-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  display: none;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  z-index: 20;
+}
+
+.mobile-nav button {
+  border: 0;
+  background: transparent;
+  padding: 12px 6px;
+  font-size: 12px;
+  color: #374151;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 28px 20px;
+  }
+
+  .hero h2 {
+    font-size: 32px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featured-videos-head h3 {
+    font-size: 30px;
+  }
+
+  .video-card {
+    width: 300px;
+    margin-left: -150px;
+  }
+
+  .video-frame {
+    height: 380px;
+  }
+
+  .video-stage {
+    height: 540px;
+  }
+
+  .brand-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .footer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .promo-bar,
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .section,
+  .header,
+  .nav,
+  .promo-bar {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .header-icons {
+    justify-content: flex-start;
+  }
+
+  .category-grid,
+  .product-grid,
+  .brand-row {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-videos-head h3 {
+    font-size: 24px;
+  }
+
+  .video-card {
+    width: min(82vw, 320px);
+    margin-left: calc(min(82vw, 320px) / -2);
+  }
+
+  .video-frame {
+    height: 320px;
+  }
+
+  .video-stage {
+    height: 485px;
+  }
+
+  .mobile-nav {
+    display: grid;
+  }
+}
+.video-product-row {
+  margin-top: 10px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+
+  transition:
+    filter 0.35s ease,
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+/* side cards */
+.video-card:not(.active) .video-product-row {
+  filter: blur(1.8px);
+  opacity: 0.65;
+  transform: scale(0.96);
+}
+
+/* active center card */
+.video-card.active .video-product-row {
+  filter: blur(0);
+  opacity: 1;
+  transform: scale(1);
 }
