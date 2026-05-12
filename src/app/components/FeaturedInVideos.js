@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import VideoProductModal from './video/VideoProductModal';
 
 function VideoProductSlider({ featuredVideos }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -14,6 +15,8 @@ function VideoProductSlider({ featuredVideos }) {
   const intervalRef = useRef(null);
 
   const [showControls, setShowControls] = useState(false);
+  
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   // =========================
   // AUTO SLIDE
@@ -58,6 +61,7 @@ function VideoProductSlider({ featuredVideos }) {
       setIsDragging(false);
       setDragX(0);
     };
+    
 
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup', onUp);
@@ -158,6 +162,14 @@ function VideoProductSlider({ featuredVideos }) {
 
     setIsDragging(true);
   };
+  const openVideoModal = video => {
+    setSelectedVideo(video);
+  };
+
+  const closeVideoModal = () => {
+    setSelectedVideo(null);
+  };
+  
 
   return (
     <section className="featured-videos section wide">
@@ -207,7 +219,10 @@ function VideoProductSlider({ featuredVideos }) {
               )}
             </div>
 
-            <div className="video-product-row">
+            <div
+              className="video-product-row"
+              onClick={() => openVideoModal(video)}
+            >
               <div className="video-product-meta">
                 <img src={video.productImage} alt={video.productName} />
                 <div>
@@ -223,6 +238,10 @@ function VideoProductSlider({ featuredVideos }) {
           </article>
         ))}
       </div>
+      <VideoProductModal
+        selectedVideo={selectedVideo}
+        closeVideoModal={closeVideoModal}
+      />
     </section>
   );
 }
