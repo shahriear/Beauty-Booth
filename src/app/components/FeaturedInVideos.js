@@ -9,7 +9,8 @@ function VideoProductSlider({ featuredVideos }) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [dragX, setDragX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-
+  // selectedVideo;
+  
   const dragRef = useRef(null);
   const videoRefs = useRef([]);
   const intervalRef = useRef(null);
@@ -174,7 +175,7 @@ function VideoProductSlider({ featuredVideos }) {
   return (
     <section className="featured-videos section wide">
       <div className="featured-videos-head">
-        <h3>Featured In Videos</h3>
+        <h3 className="text-3xl font-bold">Featured In Videos</h3>
       </div>
 
       <div className="video-stage">
@@ -223,8 +224,22 @@ function VideoProductSlider({ featuredVideos }) {
               className="video-product-row"
               onClick={() => openVideoModal(video)}
             >
-              <div className="video-product-meta">
+              {/* <div className="video-product-meta">
                 <img src={video.productImage} alt={video.productName} />
+                <div>
+                  <p>{video.category}</p>
+                  <p>
+                    {video.price} <s>{video.oldPrice}</s>
+                  </p>
+                </div>
+              </div> */}
+              <div className="video-product-meta">
+                {video.productImage ? (
+                  <img src={video.productImage} alt={video.productName} />
+                ) : (
+                  <div className="img-placeholder">No Image</div>
+                )}
+
                 <div>
                   <p>{video.category}</p>
                   <p>

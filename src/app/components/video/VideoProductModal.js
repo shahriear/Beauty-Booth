@@ -10,7 +10,8 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
   const [isMuted, setIsMuted] = useState(true);
 
   const [showControls, setShowControls] = useState(true);
-  
+
+  const productsRef = useRef(null);
 
   if (!selectedVideo) return null;
 
@@ -63,6 +64,17 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
     video.muted = !video.muted;
 
     setIsMuted(video.muted);
+  };
+
+  const scrollProducts = direction => {
+    if (!productsRef.current) return;
+
+    const scrollAmount = 260;
+
+    productsRef.current.scrollBy({
+      left: direction === 'next' ? scrollAmount : -scrollAmount,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -149,7 +161,7 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
         </div>
 
         {/* RIGHT PRODUCTS */}
-        <div className="video-modal-right">
+        {/* <div className="video-modal-right">
           <h4>Related Products</h4>
 
           <div className="related-product-card">
@@ -168,6 +180,46 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
                 <span>{selectedVideo.price}</span>
               </div>
             </div>
+          </div>
+        </div> */}
+        {/* RIGHT PRODUCTS */}
+
+        <div className="video-modal-right">
+          <div className="products-head">
+            <h4>Related Products</h4>
+          </div>
+
+          <div className="related-products-slider" ref={productsRef}>
+            {selectedVideo?.products?.map(product => (
+              <div className="related-product-card group" key={product.id}>
+                {/* IMAGE WRAPPER */}
+                <div className="product-image-wrap">
+                  <span className="text-gray-400 text-sm">Product Image</span>
+
+                  {product.badge && (
+                    <span className="sale-badge">{product.badge}</span>
+                  )}
+
+                  <button className="add-btn">+</button>
+                </div>
+
+                {/* INFO */}
+                <div className="related-product-info">
+                  <p className="related-brand">{product.brand}</p>
+
+                  <h5>{product.name}</h5>
+
+                  <div className="related-price">
+                    <s>{product.oldPrice}</s>
+                    <span>{product.price}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="products-arrows">
+            <button onClick={() => scrollProducts('prev')}>←</button>
+            <button onClick={() => scrollProducts('next')}>→</button>
           </div>
         </div>
       </div>
