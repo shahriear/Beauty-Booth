@@ -111,7 +111,7 @@ import Image from 'next/image';
 
 const Slider = dynamic(() => import('react-slick'), { ssr: false });
 
-const flatSalesProducts = [
+const freeDeliveryProducts = [
   {
     id: 1,
 
@@ -155,7 +155,7 @@ const flatSalesProducts = [
   
 ];
 
-export default function FlatSalesPercentage() {
+export default function FreeDeliveryAvailable() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -191,7 +191,7 @@ export default function FlatSalesPercentage() {
 
       {/* SLIDER */}
       <Slider {...settings}>
-        {flatSalesProducts.map(item => (
+        {freeDeliveryProducts.map(item => (
           <div key={item.id} className="px-2">
             <a
               href={item.link}
