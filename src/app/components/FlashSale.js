@@ -1,3 +1,4 @@
+// FlashSale
 
 'use client';
 
@@ -6,7 +7,7 @@ import { useState, useEffect } from 'react';
 
 const Slider = dynamic(() => import('react-slick'), { ssr: false });
 
-const BuyOneGetOneProducts = [
+const FlashSaleProducts = [
   {
     id: 1,
     name: 'ADB Dark Spot Combo (50ml+50ml)',
@@ -42,16 +43,10 @@ const BuyOneGetOneProducts = [
     discountedPrice: '৳ 1299',
     badge: 'ON SALE',
   },
-  {
-    id: 6,
-    name: 'Budget Brightening Combo (50ml+100ml)',
-    originalPrice: '৳ 1699',
-    discountedPrice: '৳ 1299',
-    badge: 'ON SALE',
-  },
+  
 ];
 
-export default function BuyOneGetOne() {
+export default function FlashSale() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -80,10 +75,10 @@ export default function BuyOneGetOne() {
 
   return (
     <section className="px-6 py-12">
-      <h2 className="text-3xl font-bold text-gray-800 mb-8">BUY ONE GET ONE</h2>
+      <h2 className="text-3xl font-bold text-gray-800 mb-8">FLASH SALE</h2>
 
       <Slider {...settings}>
-        {BuyOneGetOneProducts.map(product => (
+        {FlashSaleProducts.map(product => (
           <div key={product.id} className="px-2 pb-6">
             <div className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-grab">
               {/* Product Image */}
@@ -98,6 +93,13 @@ export default function BuyOneGetOne() {
                 >
                   {product.badge}
                 </span>
+                <button
+                  className="absolute top-3 right-3 w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center text-xl shadow-lg 
+                   opacity-0 translate-y-[-10px] transition-all duration-300 
+                   group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110"
+                >
+                  +
+                </button>
               </div>
 
               {/* Product Info */}
@@ -122,15 +124,6 @@ export default function BuyOneGetOne() {
           </div>
         ))}
       </Slider>
-
-      {/*==============Poster======== */}
-      <div className="mt-8 rounded-lg overflow-hidden shadow-lg cursor-grab">
-        <img
-          src="/images/NewArrival.webp"
-          alt="BOGO Madness"
-          className="w-full object-cover"
-        />
-      </div>
     </section>
   );
 }

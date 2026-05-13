@@ -15,6 +15,8 @@ import SkinType from './components/SkinType';
 import ExclusiveAccessories from './components/ExclusiveAccessories';
 import BuyOneGetOne from './components/BuyOneGetOne';
 import CustomerReviews from './components/CustomerReviews';
+import FlashSale from './components/FlashSale';
+import OurBrands from './components/OurBrands';
 
 export default function Home() {
   
@@ -41,7 +43,9 @@ export default function Home() {
       <SkinType />
       <ExclusiveAccessories />
       <BuyOneGetOne />
-      <CustomerReviews/>
+      <CustomerReviews />
+      <FlashSale />
+      <OurBrands/>
     </div>
   );
 }
