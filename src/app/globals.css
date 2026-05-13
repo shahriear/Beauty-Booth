@@ -835,3 +835,26 @@ video popup modal ---- */
 .boishakhi-slider .slick-slide.slick-active {
   pointer-events: auto;
 }
+/* import 'swiper/css' -- default style override */
+
+.swiper {
+  overflow: hidden;
+}
+
+.swiper-wrapper {
+  align-items: stretch !important;
+}
+
+.swiper-slide {
+  height: auto !important;
+  transform: scale(1) !important;
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+/* active / next / prev slide small/big */
+.swiper-slide-active,
+.swiper-slide-next,
+.swiper-slide-prev {
+  transform: scale(1) !important;
+}

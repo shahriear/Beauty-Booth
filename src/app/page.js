@@ -14,6 +14,7 @@ import featuredVideos from './components/data/featuredVideos';
 import SkinType from './components/SkinType';
 import ExclusiveAccessories from './components/ExclusiveAccessories';
 import BuyOneGetOne from './components/BuyOneGetOne';
+import CustomerReviews from './components/CustomerReviews';
 
 export default function Home() {
   
@@ -39,7 +40,8 @@ export default function Home() {
       <FlatSalesPercentage />
       <SkinType />
       <ExclusiveAccessories />
-      <BuyOneGetOne/>
+      <BuyOneGetOne />
+      <CustomerReviews/>
     </div>
   );
 }
