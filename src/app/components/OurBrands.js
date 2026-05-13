@@ -64,7 +64,7 @@ export default function OurBrands() {
           <div
            
             key={brand.id}
-            className="col-span-1 flex items-center justify-center h-[60px] sm:h-20 lg:h-[100px] p-2.5 border border-gray-200 rounded-xl overflow-hidden bg-white hover:border-indigo-800 duration-300 cursor-pointer"
+            className="col-span-1 flex items-center justify-center h-[60px] sm:h-20 lg:h-[100px] p-2.5 border border-gray-200 rounded-xl overflow-hidden bg-white hover:border-cyan-400 duration-300 cursor-pointer"
           >
             <Image
               src={brand.image}

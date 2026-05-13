@@ -17,6 +17,7 @@ import BuyOneGetOne from './components/BuyOneGetOne';
 import CustomerReviews from './components/CustomerReviews';
 import FlashSale from './components/FlashSale';
 import OurBrands from './components/OurBrands';
+import VisitOutlet from './components/VisitOutlet';
 
 export default function Home() {
   
@@ -45,10 +46,43 @@ export default function Home() {
       <BuyOneGetOne />
       <CustomerReviews />
       <FlashSale />
-      <OurBrands/>
+      <OurBrands />
+      <VisitOutlet/>
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import Header from './components/Header';
 // import Navbar from './components/Navbar';
 // import Banner from './components/Banner';
