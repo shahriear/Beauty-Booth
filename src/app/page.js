@@ -11,6 +11,9 @@ import BestOfSkincare from './components/BestOfSkincare';
 import FeaturedInVideos from './components/FeaturedInVideos';
 import FlatSalesPercentage from './components/FlatSalesPercentage';
 import featuredVideos from './components/data/featuredVideos';
+import SkinType from './components/SkinType';
+import ExclusiveAccessories from './components/ExclusiveAccessories';
+import BuyOneGetOne from './components/BuyOneGetOne';
 
 export default function Home() {
   
@@ -34,6 +37,9 @@ export default function Home() {
       <FeaturedInVideos featuredVideos={featuredVideos} />
 
       <FlatSalesPercentage />
+      <SkinType />
+      <ExclusiveAccessories />
+      <BuyOneGetOne/>
     </div>
   );
 }

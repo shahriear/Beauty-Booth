@@ -66,15 +66,15 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-40 bg-white shadow-md">
-      <div className="relative flex items-center px-6 py-3 container mx-auto">
+    <nav className="sticky top-0 z-40 bg-white shadow-md cursor-pointer">
+      <div className="relative flex items-center px-6 py-3 container mx-auto ">
         {/* Left Arrow */}
         <button
           onClick={() => scroll('left')}
           className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 
           w-10 h-10 flex items-center justify-center
           bg-white rounded-full shadow-md border border-gray-200
-          transition-all duration-300
+          transition-all duration-300 cursor-pointer
           hover:bg-gray-100 hover:shadow-lg
           ${mounted && showLeftArrow ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         >
@@ -89,7 +89,7 @@ export default function Navbar() {
           {menuItems.map(item => (
             <button
               key={item}
-              className="relative group text-gray-700 text-sm font-medium flex-shrink-0 py-2 px-1 transition-all duration-300 hover:text-purple-600"
+              className="relative group text-gray-700 text-sm font-medium flex-shrink-0 py-2 px-1 transition-all duration-300 hover:text-purple-600 cursor-pointer"
             >
               {item}
 
@@ -105,7 +105,7 @@ export default function Navbar() {
           className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 
           w-10 h-10 flex items-center justify-center
           bg-white rounded-full shadow-md border border-gray-200
-          transition-all duration-300
+          transition-all duration-300 cursor-pointer
           hover:bg-gray-100 hover:shadow-lg
           ${mounted && showRightArrow ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         >

@@ -48,7 +48,7 @@ export default function Trending() {
       <Slider {...settings} className="trending-slider">
         {trendingImages.map((image, index) => (
           <div key={index} className="px-3">
-            <div className="w-full h-64 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition cursor-grab">
+            <div className="w-full h-full rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition cursor-grab">
               <img
                 src={image}
                 alt={`Trending ${index}`}

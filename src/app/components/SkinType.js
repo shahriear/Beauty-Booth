@@ -149,15 +149,109 @@ const allProducts = {
       badge: 'ON SALE',
     },
   ],
+  sensitive: [
+    {
+      id: 11,
+      name: ' Perfect Whip Cleansing (120ml)',
+      originalPrice: '৳ 1200',
+      discountedPrice: '৳ 990',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+    {
+      id: 12,
+      name: ' Moisturizing Cream (50ml)',
+      originalPrice: '৳ 1500',
+      discountedPrice: '৳ 1199',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+    {
+      id: 13,
+      name: ' Recovery Cream (60ml)',
+      originalPrice: '৳ 1800',
+      discountedPrice: '৳ 1450',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+    {
+      id: 14,
+      name: ' Moisturizing Cream (40ml)',
+      originalPrice: '৳ 1650',
+      discountedPrice: '৳ 1350',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+    {
+      id: 15,
+      name: 'Lightweight Day Cream (75ml)',
+      originalPrice: '৳ 1400',
+      discountedPrice: '৳ 1100',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+    {
+      id: 16,
+      name: 'Deep Moisturizing Cream (50ml)',
+      originalPrice: '৳ 1500',
+      discountedPrice: '৳ 1199',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+  ],
+  normal: [
+    {
+      id: 11,
+      name: 'Shiseido Perfect Whip Cleansing (120ml)',
+      originalPrice: '৳ 1200',
+      discountedPrice: '৳ 990',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+    {
+      id: 12,
+      name: 'Deep Moisturizing Cream (50ml)',
+      originalPrice: '৳ 1500',
+      discountedPrice: '৳ 1199',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+    {
+      id: 13,
+      name: 'Night Recovery Cream (60ml)',
+      originalPrice: '৳ 1800',
+      discountedPrice: '৳ 1450',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+    {
+      id: 14,
+      name: 'SPF 50 Moisturizing Cream (40ml)',
+      originalPrice: '৳ 1650',
+      discountedPrice: '৳ 1350',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+    {
+      id: 15,
+      name: 'Lightweight Day Cream (75ml)',
+      originalPrice: '৳ 1400',
+      discountedPrice: '৳ 1100',
+      category: 'Moisturizing Cream',
+      badge: 'ON SALE',
+    },
+  ],
 };
 
 const categories = [
-  { label: 'Cleansers', value: 'cleansers' },
-  { label: 'Serums & Treatments', value: 'serums' },
-  { label: 'Moisturizing Cream', value: 'moisturizing' },
+  { label: 'Oily', value: 'cleansers' },
+  { label: 'Dry', value: 'serums' },
+  { label: 'Combination', value: 'moisturizing' },
+  { label: 'Sensitive', value: 'sensitive' },
+  { label: 'Normal', value: 'normal' },
 ];
 
-export default function BoishakhiOffer() {
+export default function SkinType() {
   const [mounted, setMounted] = useState(false);
   const [activeCategory, setActiveCategory] = useState('cleansers');
   const [displayedProducts, setDisplayedProducts] = useState(
@@ -195,19 +289,14 @@ export default function BoishakhiOffer() {
   if (!mounted) return null;
 
   return (
-    <section className="px-6 py-12 bg-gray-50 rounded-3xl">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">BOISHAKHI OFFER</h2>
-        <a
-          href="#"
-          className="text-pink-600 font-semibold hover:text-pink-700 transition"
-        >
-          See All →
-        </a>
+    <section className="px-6 py-15 bg-gray-50 rounded-3xl">
+      <div className=" mb-15">
+        <h2 className="text-4xl font-bold text-gray-800">SHOP BY SKIN TYPE</h2>
+        
       </div>
 
       {/* Category Filter Tabs */}
-      <div className="flex justify-center gap-3 mb-8 flex-wrap">
+      <div className="flex justify-center gap-3 mb-8 flex-wrap ">
         {categories.map(category => (
           <button
             key={category.value}
@@ -229,16 +318,7 @@ export default function BoishakhiOffer() {
           <div key={product.id} className="px-2 pb-6">
             <div className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-grab active:cursor-grabbing">
               {/* Product Image Placeholder */}
-              {/* <div className="w-full h-48 bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center relative overflow-hidden">
-                <span className="text-gray-400 text-sm text-center px-2">
-                  Product Image
-                </span>
 
-                
-                <span className="absolute top-3 left-3 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                  ON SALE
-                </span>
-              </div> */}
               <div className="w-full h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
                 <span className="text-gray-400 text-sm">Product Image</span>
 

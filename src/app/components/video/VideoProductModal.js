@@ -13,6 +13,10 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
 
   const productsRef = useRef(null);
 
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+
   if (!selectedVideo) return null;
 
   // =========================
@@ -77,6 +81,25 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
     });
   };
 
+
+  const handleMouseDown = e => {
+    isDragging.current = true;
+
+    startX.current = e.pageX;
+    scrollLeft.current = productsRef.current.scrollLeft;
+  };
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
+  };
+
+  const handleMouseMove = e => {
+    if (!isDragging.current) return;
+
+    const walk = e.pageX - startX.current;
+
+    productsRef.current.scrollLeft = scrollLeft.current - walk;
+  };
   return (
     <div className="video-modal-overlay" onClick={closeVideoModal}>
       <div className="video-modal-container" onClick={e => e.stopPropagation()}>
@@ -189,7 +212,14 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
             <h4>Related Products</h4>
           </div>
 
-          <div className="related-products-slider" ref={productsRef}>
+          <div
+            className="related-products-slider"
+            ref={productsRef}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onMouseMove={handleMouseMove}
+          >
             {selectedVideo?.products?.map(product => (
               <div className="related-product-card group" key={product.id}>
                 {/* IMAGE WRAPPER */}
