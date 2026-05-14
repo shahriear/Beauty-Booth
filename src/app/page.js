@@ -18,12 +18,13 @@ import CustomerReviews from './components/CustomerReviews';
 import FlashSale from './components/FlashSale';
 import OurBrands from './components/OurBrands';
 import VisitOutlet from './components/VisitOutlet';
+import FooterHomeDescription from './components/seo-Content/FooterHomeDescription';
 
 export default function Home() {
   
 
   return (
-    <div className="min-h-screen bg-white container">
+    <div className="min-h-screen  container">
       {/* <Header />
       <Navbar /> */}
 
@@ -47,7 +48,8 @@ export default function Home() {
       <CustomerReviews />
       <FlashSale />
       <OurBrands />
-      <VisitOutlet/>
+      <VisitOutlet />
+      {/* <FooterHomeDescription/> */}
     </div>
   );
 }

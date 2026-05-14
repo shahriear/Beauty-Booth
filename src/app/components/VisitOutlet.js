@@ -40,7 +40,7 @@ const galleryImages = [
 
 export default function VisitOutlet() {
   return (
-    <section className="w-screen bg-[#f5f5f5] relative left-1/2 right-1/2 -mx-[50vw] py-10 lg:py-16">
+    <section className="w-screen bg-[#ececec77] relative left-1/2 right-1/2 -mx-[50vw] py-10 lg:py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* LEFT SIDE */}
@@ -87,7 +87,7 @@ export default function VisitOutlet() {
                 <Link
                   href="https://maps.app.goo.gl/iJKttkUndmcG2HGZ9"
                   target="_blank"
-                  className="h-10 px-6 rounded-xl border border-black flex items-center justify-center gap-2 font-medium hover:bg-black hover:text-white transition-all duration-300"
+                  className="h-12 px-6 rounded-xl border border-black flex items-center justify-center gap-2 font-medium hover:bg-black hover:text-white transition-all duration-300"
                 >
                   Get Link
                   <ArrowRight size={18} />

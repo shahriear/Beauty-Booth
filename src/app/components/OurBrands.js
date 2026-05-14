@@ -39,7 +39,7 @@ const brands = [
 
 export default function OurBrands() {
   return (
-    <section className="mt-8 sm:mt-16 mb-4">
+    <section className="mt-5 mb-15">
       {/* HEADER */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-x-2">
