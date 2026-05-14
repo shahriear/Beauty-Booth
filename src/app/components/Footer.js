@@ -26,10 +26,13 @@ export default function Footer() {
             <Link href="/">
               <Image
                 src="/images/footer-img/cab.webp"
-                alt="Logo"
-                width={100}
-                height={50}
-                className="object-contain"
+                alt="footer image"
+                width={200}
+                height={200}
+                style={{
+                  width: '100px',
+                  height: 'auto',
+                }}
               />
             </Link>
 
