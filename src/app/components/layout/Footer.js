@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa';
 import { CiFacebook } from 'react-icons/ci';
-import FooterHomeDescription from '../components/seo-Content/FooterHomeDescription';
+import FooterHomeDescription from '../../components/seo-Content/FooterHomeDescription';
 
 export default function Footer() {
  

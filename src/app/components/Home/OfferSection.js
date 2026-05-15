@@ -104,6 +104,22 @@ export default function OfferSection() {
     </section>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // 'use client';
 
 // import Slider from 'react-slick';

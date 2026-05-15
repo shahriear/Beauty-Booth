@@ -1,7 +1,7 @@
-import FloatingButtons from './components/FloatingButtons';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Navbar from './components/Navbar';
+import FloatingButtons from './components/hooks/FloatingButtons';
+import Footer from './components/layout/Footer';
+import Header from './components/layout/Header';
+import Navbar from './components/layout/Navbar';
 import './globals.css';
 
 export const metadata = {
@@ -15,6 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Header />
+        
         <Navbar />
         {children}
         <Footer />

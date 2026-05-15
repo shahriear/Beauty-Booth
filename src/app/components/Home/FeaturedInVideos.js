@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
-import VideoProductModal from './video/VideoProductModal';
+import VideoProductModal from '@/app/components/Home/video/VideoProductModal';
 
 function VideoProductSlider({ featuredVideos }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -262,6 +262,41 @@ function VideoProductSlider({ featuredVideos }) {
 }
 
 export default VideoProductSlider;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // 'use client';
 
