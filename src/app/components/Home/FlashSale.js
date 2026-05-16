@@ -25,23 +25,23 @@ const FlashSaleProducts = [
   },
   {
     id: 3,
-    name: 'Budget Brightening Combo (50ml+100ml)',
+    name: 'lo hgfhgfhgf Combo (50ml+100ml)',
     originalPrice: '৳ 1699',
-    discountedPrice: '৳ 1299',
+    discountedPrice: '৳ 2299',
     badge: 'ON SALE',
   },
   {
     id: 4,
-    name: 'Budget Brightening Combo (50ml+100ml)',
+    name: 'pip lorem Combo (50ml+100ml)',
     originalPrice: '৳ 1699',
-    discountedPrice: '৳ 1299',
+    discountedPrice: '৳ 259',
     badge: 'ON SALE',
   },
   {
     id: 5,
     name: 'Budget Brightening Combo (50ml+100ml)',
     originalPrice: '৳ 1699',
-    discountedPrice: '৳ 1299',
+    discountedPrice: '৳ 2559',
     badge: 'ON SALE',
   },
 ];
