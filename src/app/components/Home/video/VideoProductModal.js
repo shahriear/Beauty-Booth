@@ -2,9 +2,11 @@
 
 import { useRef, useState } from 'react';
 import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react';
+import useCartStore from '../../store/useCartStore';
 
 function VideoProductModal({ selectedVideo, closeVideoModal }) {
   const videoRef = useRef(null);
+  const addToCart = useCartStore(state => state.addToCart);
 
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -80,7 +82,6 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
       behavior: 'smooth',
     });
   };
-
 
   const handleMouseDown = e => {
     isDragging.current = true;
@@ -230,7 +231,12 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
                     <span className="sale-badge">{product.badge}</span>
                   )}
 
-                  <button className="add-btn">+</button>
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="add-btn"
+                  >
+                    +
+                  </button>
                 </div>
 
                 {/* INFO */}

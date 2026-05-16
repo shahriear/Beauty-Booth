@@ -4,6 +4,7 @@
 
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
+import useCartStore from '../store/useCartStore';
 
 const Slider = dynamic(() => import('react-slick'), { ssr: false });
 
@@ -43,11 +44,11 @@ const FlashSaleProducts = [
     discountedPrice: '৳ 1299',
     badge: 'ON SALE',
   },
-  
 ];
 
 export default function FlashSale() {
   const [mounted, setMounted] = useState(false);
+  const addToCart = useCartStore(state => state.addToCart);
 
   useEffect(() => {
     setMounted(true);
@@ -94,6 +95,7 @@ export default function FlashSale() {
                   {product.badge}
                 </span>
                 <button
+                  onClick={() => addToCart(product)}
                   className="absolute top-3 right-3 w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center text-xl shadow-lg 
                    opacity-0 translate-y-[-10px] transition-all duration-300 
                    group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110"
@@ -127,4 +129,3 @@ export default function FlashSale() {
     </section>
   );
 }
-

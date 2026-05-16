@@ -2,72 +2,73 @@
 
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
+import useCartStore from '../store/useCartStore';
 
 const Slider = dynamic(() => import('react-slick'), { ssr: false });
 
 // Product data organized by category
 const allProducts = {
-  cleansers: [
+  oily: [
     {
-      id: 1,
+      id: 'oily-1',
       name: 'Gentle Salicylic Acid Cleanser (100ml)',
       originalPrice: '৳ 1199',
       discountedPrice: '৳ 999',
-      category: 'Cleansers',
+      category: 'Oily',
       badge: 'ON SALE',
     },
     {
-      id: 2,
+      id: 'oily-2',
       name: 'Beauty Of Joseeon Cleansing',
       originalPrice: '৳ 1620',
       discountedPrice: '৳ 1299',
-      category: 'Cleansers',
+      category: 'Oily',
       badge: 'ON SALE',
     },
     {
-      id: 3,
+      id: 'oily-3',
       name: 'Foaming Deep Cleanser (120ml)',
       originalPrice: '৳ 1400',
       discountedPrice: '৳ 1100',
-      category: 'Cleansers',
+      category: 'Oily',
       badge: 'ON SALE',
     },
     {
-      id: 4,
+      id: 'oily-4',
       name: 'Gentle Exfoliating Cleanser (100ml)',
       originalPrice: '৳ 1300',
       discountedPrice: '৳ 1050',
-      category: 'Cleansers',
+      category: 'Oily',
       badge: 'ON SALE',
     },
     {
-      id: 5,
+      id: 'oily-5',
       name: 'Hydrating Cleanser Milk (150ml)',
       originalPrice: '৳ 1500',
       discountedPrice: '৳ 1200',
-      category: 'Cleansers',
+      category: 'Oily',
       badge: 'ON SALE',
     },
     {
-      id: 6,
+      id: 'oily-6',
       name: 'Gentle Salicylic Acid Cleanser (100ml)',
       originalPrice: '৳ 1199',
       discountedPrice: '৳ 999',
-      category: 'Cleansers',
+      category: 'Oily',
       badge: 'ON SALE',
     },
     {
-      id: 7,
+      id: 'oily-7',
       name: 'Gentle Salicylic Acid Cleanser (100ml)',
       originalPrice: '৳ 1199',
       discountedPrice: '৳ 999',
-      category: 'Cleansers',
+      category: 'Oily',
       badge: 'ON SALE',
     },
   ],
-  serums: [
+  dry: [
     {
-      id: 6,
+      id: 'dry-1',
       name: 'Serums & Treatments Premium',
       originalPrice: '৳ 2099',
       discountedPrice: '৳ 1699',
@@ -75,7 +76,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 7,
+      id: 'dry-2',
       name: 'Hyaluronic Acid Serum (30ml)',
       originalPrice: '৳ 1800',
       discountedPrice: '৳ 1450',
@@ -83,7 +84,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 8,
+      id: 'dry-3',
       name: 'Vitamin C Brightening Serum (50ml)',
       originalPrice: '৳ 2200',
       discountedPrice: '৳ 1750',
@@ -91,7 +92,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 9,
+      id: 'dry-4',
       name: 'Niacinamide Treatment Serum (40ml)',
       originalPrice: '৳ 1900',
       discountedPrice: '৳ 1550',
@@ -99,7 +100,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 10,
+      id: 'dry-5',
       name: 'Peptide Rich Serum (35ml)',
       originalPrice: '৳ 2000',
       discountedPrice: '৳ 1600',
@@ -107,9 +108,9 @@ const allProducts = {
       badge: 'ON SALE',
     },
   ],
-  moisturizing: [
+  combination: [
     {
-      id: 11,
+      id: 'combination-1',
       name: 'Shiseido Perfect Whip Cleansing (120ml)',
       originalPrice: '৳ 1200',
       discountedPrice: '৳ 990',
@@ -117,7 +118,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 12,
+      id: 'combination-2',
       name: 'Deep Moisturizing Cream (50ml)',
       originalPrice: '৳ 1500',
       discountedPrice: '৳ 1199',
@@ -125,7 +126,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 13,
+      id: 'combination-3',
       name: 'Night Recovery Cream (60ml)',
       originalPrice: '৳ 1800',
       discountedPrice: '৳ 1450',
@@ -133,7 +134,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 14,
+      id: 'combination-4',
       name: 'SPF 50 Moisturizing Cream (40ml)',
       originalPrice: '৳ 1650',
       discountedPrice: '৳ 1350',
@@ -141,7 +142,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 15,
+      id: 'combination-5',
       name: 'Lightweight Day Cream (75ml)',
       originalPrice: '৳ 1400',
       discountedPrice: '৳ 1100',
@@ -151,7 +152,7 @@ const allProducts = {
   ],
   sensitive: [
     {
-      id: 11,
+      id: 'sensitive-1',
       name: ' Perfect Whip Cleansing (120ml)',
       originalPrice: '৳ 1200',
       discountedPrice: '৳ 990',
@@ -159,7 +160,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 12,
+      id: 'sensitive-2',
       name: ' Moisturizing Cream (50ml)',
       originalPrice: '৳ 1500',
       discountedPrice: '৳ 1199',
@@ -167,7 +168,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 13,
+      id: 'sensitive-3',
       name: ' Recovery Cream (60ml)',
       originalPrice: '৳ 1800',
       discountedPrice: '৳ 1450',
@@ -175,7 +176,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 14,
+      id: 'sensitive-4',
       name: ' Moisturizing Cream (40ml)',
       originalPrice: '৳ 1650',
       discountedPrice: '৳ 1350',
@@ -183,7 +184,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 15,
+      id: 'sensitive-5',
       name: 'Lightweight Day Cream (75ml)',
       originalPrice: '৳ 1400',
       discountedPrice: '৳ 1100',
@@ -191,7 +192,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 16,
+      id: 'sensitive-6',
       name: 'Deep Moisturizing Cream (50ml)',
       originalPrice: '৳ 1500',
       discountedPrice: '৳ 1199',
@@ -201,7 +202,7 @@ const allProducts = {
   ],
   normal: [
     {
-      id: 11,
+      id: 'normal-1',
       name: 'Shiseido Perfect Whip Cleansing (120ml)',
       originalPrice: '৳ 1200',
       discountedPrice: '৳ 990',
@@ -209,7 +210,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 12,
+      id: 'normal-2',
       name: 'Deep Moisturizing Cream (50ml)',
       originalPrice: '৳ 1500',
       discountedPrice: '৳ 1199',
@@ -217,7 +218,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 13,
+      id: 'normal-3',
       name: 'Night Recovery Cream (60ml)',
       originalPrice: '৳ 1800',
       discountedPrice: '৳ 1450',
@@ -225,7 +226,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 14,
+      id: 'normal-4',
       name: 'SPF 50 Moisturizing Cream (40ml)',
       originalPrice: '৳ 1650',
       discountedPrice: '৳ 1350',
@@ -233,7 +234,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 15,
+      id: 'normal-5',
       name: 'Lightweight Day Cream (75ml)',
       originalPrice: '৳ 1400',
       discountedPrice: '৳ 1100',
@@ -244,19 +245,18 @@ const allProducts = {
 };
 
 const categories = [
-  { label: 'Oily', value: 'cleansers' },
-  { label: 'Dry', value: 'serums' },
-  { label: 'Combination', value: 'moisturizing' },
+  { label: 'Oily', value: 'oily' },
+  { label: 'Dry', value: 'dry' },
+  { label: 'Combination', value: 'combination' },
   { label: 'Sensitive', value: 'sensitive' },
   { label: 'Normal', value: 'normal' },
 ];
 
 export default function SkinType() {
   const [mounted, setMounted] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('cleansers');
-  const [displayedProducts, setDisplayedProducts] = useState(
-    allProducts.cleansers,
-  );
+  const [activeCategory, setActiveCategory] = useState('oily');
+  const [displayedProducts, setDisplayedProducts] = useState(allProducts.oily);
+  const addToCart = useCartStore(state => state.addToCart);
 
   useEffect(() => {
     setMounted(true);
@@ -292,7 +292,6 @@ export default function SkinType() {
     <section className="px-6 py-15 bg-gray-50 rounded-3xl">
       <div className=" mb-15">
         <h2 className="text-4xl font-bold text-gray-800">SHOP BY SKIN TYPE</h2>
-        
       </div>
 
       {/* Category Filter Tabs */}
@@ -329,6 +328,7 @@ export default function SkinType() {
 
                 {/* ➕ ADD BUTTON */}
                 <button
+                  onClick={() => addToCart(product)}
                   className="absolute top-3 right-3 w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center text-xl shadow-lg 
                    opacity-0 translate-y-[-10px] transition-all duration-300 
                    group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110"
@@ -363,3 +363,9 @@ export default function SkinType() {
     </section>
   );
 }
+
+//  আসল সমস্যা এখানে
+
+// তোমার data এ এইটা দেখো
+
+//  Same ID multiple times ChatGpt...!

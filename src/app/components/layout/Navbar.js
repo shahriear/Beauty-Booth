@@ -66,7 +66,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-30 bg-white shadow-md cursor-pointer">
+    <nav className="sticky top-22 z-30 bg-white shadow-md cursor-pointer">
       <div className="relative flex items-center px-6 py-3 container mx-auto ">
         {/* Left Arrow */}
         <button

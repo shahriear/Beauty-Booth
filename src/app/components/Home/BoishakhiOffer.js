@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
+import useCartStore from '../store/useCartStore';
 
 const Slider = dynamic(() => import('react-slick'), { ssr: false });
 
@@ -9,7 +10,7 @@ const Slider = dynamic(() => import('react-slick'), { ssr: false });
 const allProducts = {
   cleansers: [
     {
-      id: 1,
+      id: 'cleansers-1',
       name: 'Gentle Salicylic Acid Cleanser (100ml)',
       originalPrice: '৳ 1199',
       discountedPrice: '৳ 999',
@@ -17,7 +18,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 2,
+      id: 'cleansers-2',
       name: 'Beauty Of Joseeon Cleansing',
       originalPrice: '৳ 1620',
       discountedPrice: '৳ 1299',
@@ -25,7 +26,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 3,
+      id: 'cleansers-3',
       name: 'Foaming Deep Cleanser (120ml)',
       originalPrice: '৳ 1400',
       discountedPrice: '৳ 1100',
@@ -33,7 +34,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 4,
+      id: 'cleansers-4',
       name: 'Gentle Exfoliating Cleanser (100ml)',
       originalPrice: '৳ 1300',
       discountedPrice: '৳ 1050',
@@ -41,7 +42,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 5,
+      id: 'cleansers-5',
       name: 'Hydrating Cleanser Milk (150ml)',
       originalPrice: '৳ 1500',
       discountedPrice: '৳ 1200',
@@ -49,7 +50,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 6,
+      id: 'cleansers-6',
       name: 'Gentle Salicylic Acid Cleanser (100ml)',
       originalPrice: '৳ 1199',
       discountedPrice: '৳ 999',
@@ -57,7 +58,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 7,
+      id: 'cleansers-7',
       name: 'Gentle Salicylic Acid Cleanser (100ml)',
       originalPrice: '৳ 1199',
       discountedPrice: '৳ 999',
@@ -67,7 +68,7 @@ const allProducts = {
   ],
   serums: [
     {
-      id: 6,
+      id: 'serums-1',
       name: 'Serums & Treatments Premium',
       originalPrice: '৳ 2099',
       discountedPrice: '৳ 1699',
@@ -75,7 +76,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 7,
+      id: 'serums-2',
       name: 'Hyaluronic Acid Serum (30ml)',
       originalPrice: '৳ 1800',
       discountedPrice: '৳ 1450',
@@ -83,7 +84,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 8,
+      id: 'serums-3',
       name: 'Vitamin C Brightening Serum (50ml)',
       originalPrice: '৳ 2200',
       discountedPrice: '৳ 1750',
@@ -91,7 +92,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 9,
+      id: 'serums-4',
       name: 'Niacinamide Treatment Serum (40ml)',
       originalPrice: '৳ 1900',
       discountedPrice: '৳ 1550',
@@ -99,7 +100,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 10,
+      id: 'serums-5',
       name: 'Peptide Rich Serum (35ml)',
       originalPrice: '৳ 2000',
       discountedPrice: '৳ 1600',
@@ -109,7 +110,7 @@ const allProducts = {
   ],
   moisturizing: [
     {
-      id: 11,
+      id: 'moisturizing-1',
       name: 'Shiseido Perfect Whip Cleansing (120ml)',
       originalPrice: '৳ 1200',
       discountedPrice: '৳ 990',
@@ -117,7 +118,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 12,
+      id: 'moisturizing-2',
       name: 'Deep Moisturizing Cream (50ml)',
       originalPrice: '৳ 1500',
       discountedPrice: '৳ 1199',
@@ -125,7 +126,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 13,
+      id: 'moisturizing-3',
       name: 'Night Recovery Cream (60ml)',
       originalPrice: '৳ 1800',
       discountedPrice: '৳ 1450',
@@ -133,7 +134,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 14,
+      id: 'moisturizing-4',
       name: 'SPF 50 Moisturizing Cream (40ml)',
       originalPrice: '৳ 1650',
       discountedPrice: '৳ 1350',
@@ -141,7 +142,7 @@ const allProducts = {
       badge: 'ON SALE',
     },
     {
-      id: 15,
+      id: 'moisturizing-5',
       name: 'Lightweight Day Cream (75ml)',
       originalPrice: '৳ 1400',
       discountedPrice: '৳ 1100',
@@ -163,6 +164,7 @@ export default function BoishakhiOffer() {
   const [displayedProducts, setDisplayedProducts] = useState(
     allProducts.cleansers,
   );
+  const addToCart = useCartStore(state => state.addToCart);
 
   useEffect(() => {
     setMounted(true);
@@ -249,6 +251,7 @@ export default function BoishakhiOffer() {
 
                 {/* ➕ ADD BUTTON */}
                 <button
+                  onClick={() => addToCart(product)}
                   className="absolute top-3 right-3 w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center text-xl shadow-lg 
                    opacity-0 translate-y-[-10px] transition-all duration-300 
                    group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110"
