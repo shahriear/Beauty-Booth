@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+
 import CartDrawer from '../ui/CartDrawer';
 import useCartStore from '../store/useCartStore';
 
@@ -50,7 +51,8 @@ export default function Header() {
               <span className="text-xs">Cart</span>
 
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                {cartItems.length}
+                {/* {cartItems.length} */}
+                {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
               </span>
             </button>
           </div>

@@ -10,13 +10,13 @@ function VideoProductSlider({ featuredVideos }) {
   const [dragX, setDragX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   // selectedVideo;
-  
+
   const dragRef = useRef(null);
   const videoRefs = useRef([]);
   const intervalRef = useRef(null);
 
   const [showControls, setShowControls] = useState(false);
-  
+
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   // =========================
@@ -62,7 +62,6 @@ function VideoProductSlider({ featuredVideos }) {
       setIsDragging(false);
       setDragX(0);
     };
-    
 
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup', onUp);
@@ -170,7 +169,6 @@ function VideoProductSlider({ featuredVideos }) {
   const closeVideoModal = () => {
     setSelectedVideo(null);
   };
-  
 
   return (
     <section className="featured-videos section wide">
@@ -242,8 +240,8 @@ function VideoProductSlider({ featuredVideos }) {
 
                 <div>
                   <p>{video.category}</p>
-                  <p>
-                    {video.price} <s>{video.oldPrice}</s>
+                  <p className="font-bold">
+                    ৳ {video.price} <s>{video.oldPrice}</s>
                   </p>
                 </div>
               </div>
@@ -262,41 +260,6 @@ function VideoProductSlider({ featuredVideos }) {
 }
 
 export default VideoProductSlider;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // 'use client';
 

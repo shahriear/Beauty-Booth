@@ -9,43 +9,43 @@ const comboProducts = [
   {
     id: 1,
     name: 'ADB Dark Spot Combo (50ml+50ml)',
-    originalPrice: '৳ 2350',
-    discountedPrice: '৳ 1350',
+    originalPrice: ' 2350',
+    discountedPrice: ' 1350',
     badge: 'ON SALE',
   },
   {
     id: 2,
     name: 'Dandruff Defence Combo (250ml)',
-    originalPrice: '৳ 1870',
-    discountedPrice: '৳ 1349',
+    originalPrice: ' 1870',
+    discountedPrice: ' 1349',
     badge: 'ON SALE',
   },
   {
     id: 3,
     name: 'Budget Brightening Combo (50ml+100ml)',
-    originalPrice: '৳ 1699',
-    discountedPrice: '৳ 1299',
+    originalPrice: ' 1699',
+    discountedPrice: ' 1299',
     badge: 'ON SALE',
   },
   {
     id: 4,
     name: 'Budget Brightening Combo (50ml+100ml)',
-    originalPrice: '৳ 1699',
-    discountedPrice: '৳ 1299',
+    originalPrice: ' 1699',
+    discountedPrice: ' 1299',
     badge: 'ON SALE',
   },
   {
     id: 5,
     name: 'Budget Brightening Combo (50ml+100ml)',
-    originalPrice: '৳ 1699',
-    discountedPrice: '৳ 1299',
+    originalPrice: ' 1699',
+    discountedPrice: ' 1299',
     badge: 'ON SALE',
   },
   {
     id: 6,
     name: 'Budget Brightening Combo (50ml+100ml)',
-    originalPrice: '৳ 1699',
-    discountedPrice: '৳ 1299',
+    originalPrice: ' 1699',
+    discountedPrice: ' 1299',
     badge: 'ON SALE',
   },
 ];
@@ -97,7 +97,6 @@ export default function ComboOffers() {
                 >
                   {product.badge}
                 </span>
-
               </div>
 
               {/* Product Info */}
@@ -111,10 +110,10 @@ export default function ComboOffers() {
 
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-gray-400 line-through">
-                    {product.originalPrice}
+                    ৳{product.originalPrice}
                   </span>
                   <span className="text-lg font-bold text-pink-600">
-                    {product.discountedPrice}
+                    ৳{product.discountedPrice}
                   </span>
                 </div>
               </div>

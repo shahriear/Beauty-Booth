@@ -242,12 +242,11 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
                 {/* INFO */}
                 <div className="related-product-info">
                   <p className="related-brand">{product.brand}</p>
-
                   <h5>{product.name}</h5>
-
+                  
                   <div className="related-price">
-                    <s>{product.oldPrice}</s>
-                    <span>{product.price}</span>
+                    <s>৳{product.originalPrice}</s>
+                    <span>৳{product.discountedPrice}</span>
                   </div>
                 </div>
               </div>

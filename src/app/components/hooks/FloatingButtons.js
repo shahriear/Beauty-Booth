@@ -30,7 +30,7 @@ export default function FloatingButtons() {
   };
 
   return (
-    <div className="fixed bottom-15 right-18 flex flex-col gap-3 z-50">
+    <div className="fixed bottom-15 right-18 flex flex-col gap-3 z-40">
       {/* Top Button (Only show on scroll) */}
       <button
         onClick={scrollToTop}
