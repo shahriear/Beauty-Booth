@@ -113,17 +113,18 @@ export default function CartDrawer({ cartOpen, setCartOpen, cartItems }) {
           <div className="border-t p-5 space-y-4">
             {/* TOTAL */}
             <div className="flex items-center justify-between">
-              <span className="text-lg font-semibold">Total</span>
+              <div className='flex-col flex'>
+                <span className="text-xs font-semibold text-gray-500">Total </span>
 
-              <span className="text-2xl font-bold text-pink-600">
-                ৳ {total}
-              </span>
+                <span className="text-md font-bold text-black">
+                  ৳ {total}
+                </span>
+              </div>
+              {/* BUTTON */}
+              <button className="px-5 bg-pink-500 hover:bg-pink-600 text-white py-4 rounded-xl font-semibold transition">
+                Checkout →
+              </button>
             </div>
-
-            {/* BUTTON */}
-            <button className="w-full bg-pink-500 hover:bg-pink-600 text-white py-4 rounded-xl font-semibold transition">
-              Checkout →
-            </button>
           </div>
         )}
       </div>

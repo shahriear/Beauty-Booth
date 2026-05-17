@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import FloatingButtons from './components/hooks/FloatingButtons';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
@@ -14,8 +15,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <Toaster position="top-right" reverseOrder={false} />
         <Header />
-        
+
         <Navbar />
         {children}
         <Footer />

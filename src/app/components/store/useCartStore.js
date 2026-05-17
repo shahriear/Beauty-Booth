@@ -86,6 +86,7 @@
 
 // export default useCartStore;
 
+import toast from 'react-hot-toast';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -123,6 +124,10 @@ const useCartStore = create(
             ],
           });
         }
+        // SAME TOAST EVERY TIME
+        {toast.success('Cart updated', {
+          position: 'top-centerr',
+        });};
       },
 
       // INCREASE QUANTITY

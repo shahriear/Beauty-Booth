@@ -38,6 +38,7 @@
 
 'use client';
 
+import toast from 'react-hot-toast';
 import useCartStore from '../store/useCartStore';
 
 export default function CartItem({ item }) {
@@ -56,9 +57,13 @@ export default function CartItem({ item }) {
         className="w-20 h-20 object-cover rounded-lg bg-gray-100"
       />
 
-      {/* INFO */}
+      {/* INFO  */}
       <div className="flex-1">
         {/* NAME */}
+        <p className="text-xs text-amber-800 font-semiold uppercase tracking-wide mb-1">
+          {item.category}
+        </p>
+
         <h4 className="font-semibold text-sm">{item.name}</h4>
 
         {/* PRICE */}
@@ -78,8 +83,13 @@ export default function CartItem({ item }) {
         <div className="flex items-center gap-3 mt-4">
           {/* DECREASE */}
           <button
-            onClick={() => decreaseQuantity(item.id)}
-            className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 transition"
+            onClick={() => {
+              (decreaseQuantity(item.id),
+                toast.success('Cart updated', {
+                  position: 'top-center',
+                }));
+            }}
+            className="px-4 border text-gray-400 bg-gray-200 hover:bg-gray-300 transition"
           >
             -
           </button>
@@ -89,15 +99,25 @@ export default function CartItem({ item }) {
 
           {/* INCREASE */}
           <button
-            onClick={() => increaseQuantity(item.id)}
-            className="w-8 h-8 rounded-full bg-black text-white hover:scale-105 transition"
+            onClick={() => {
+              increaseQuantity(item.id);
+              toast.success('Cart updated', {
+                position: 'top-centerr',
+              });
+            }}
+            className="px-4 border text-gray-400 bg-gray-200 hover:bg-gray-300 transition"
           >
             +
           </button>
 
           {/* REMOVE */}
           <button
-            onClick={() => removeFromCart(item.id)}
+            onClick={() => {
+              removeFromCart(item.id);
+              toast.success('Product removed', {
+                position: 'top-center',
+              });
+            }}
             className="ml-auto text-red-500 hover:text-red-700 text-xs font-semibold transition"
           >
             Remove
