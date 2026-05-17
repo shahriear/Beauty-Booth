@@ -98,7 +98,7 @@ export default function CartDrawer({ cartOpen, setCartOpen, cartItems }) {
         {/* BODY */}
         <div className="flex-1 overflow-y-auto p-5">
           {cartItems.length === 0 ? (
-            <EmptyCart />
+            <EmptyCart setCartOpen={setCartOpen} />
           ) : (
             <div className="space-y-4">
               {cartItems.map(item => (
@@ -113,12 +113,12 @@ export default function CartDrawer({ cartOpen, setCartOpen, cartItems }) {
           <div className="border-t p-5 space-y-4">
             {/* TOTAL */}
             <div className="flex items-center justify-between">
-              <div className='flex-col flex'>
-                <span className="text-xs font-semibold text-gray-500">Total </span>
-
-                <span className="text-md font-bold text-black">
-                  ৳ {total}
+              <div className="flex-col flex">
+                <span className="text-xs font-semibold text-gray-500">
+                  Total{' '}
                 </span>
+
+                <span className="text-md font-bold text-black">৳ {total}</span>
               </div>
               {/* BUTTON */}
               <button className="px-5 bg-pink-500 hover:bg-pink-600 text-white py-4 rounded-xl font-semibold transition">
