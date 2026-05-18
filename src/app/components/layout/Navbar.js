@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import MegaMenu from './MegaMenu';
+import { BadgeCheck, Flame, Sparkles, Star } from 'lucide-react';
 
 const menuItems = [
   'Eid Festive Sale',
@@ -19,14 +21,44 @@ const menuItems = [
   'BOGO',
 ];
 
+// Items that have mega menus
+const megaMenuItems = [
+  'Skin Care',
+  'Hair Care',
+  'Make Up',
+  'Accessories',
+  'Bath & Body Care',
+  'Mom & Baby Care',
+  "Men's Care",
+];
+
+const menuIcons = {
+  'Eid Festive Sale': (
+    <Flame
+      size={16}
+      className="text-red-500 group-hover:scale-110 transition"
+    />
+  ),
+  New: (
+    <Sparkles
+      size={16}
+      className="text-purple-500 group-hover:rotate-12 transition"
+    />
+  ),
+  Brands: <Star size={16} className="text-yellow-500" />,
+  'Best Selling': <BadgeCheck size={16} className="text-blue-500" />,
+};
 export default function Navbar() {
   const scrollContainerRef = useRef(null);
+  const megaMenuRef = useRef(null);
 
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [activeMegaMenu, setActiveMegaMenu] = useState(null);
+  const [mouseOverMenu, setMouseOverMenu] = useState(false);
 
-  // Fix hydration 
+  // Fix hydration
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -60,14 +92,42 @@ export default function Navbar() {
     if (!el) return;
 
     el.scrollBy({
-      left: direction === 'left' ? -200 : 200,
+      left: direction === 'left' ? -300 : 300,
       behavior: 'smooth',
     });
   };
 
+  // Handle mega menu timeout
+  useEffect(() => {
+    let timeoutId;
+
+    if (!mouseOverMenu && activeMegaMenu) {
+      timeoutId = setTimeout(() => {
+        setActiveMegaMenu(null);
+      }, 200); // Small delay to prevent flickering
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [mouseOverMenu, activeMegaMenu]);
+
+  const handleMenuItemHover = item => {
+    if (megaMenuItems.includes(item)) {
+      setActiveMegaMenu(item);
+      setMouseOverMenu(true);
+    } else {
+      setActiveMegaMenu(null);
+    }
+  };
+
+  const handleMenuItemLeave = () => {
+    if (!mouseOverMenu) {
+      setActiveMegaMenu(null);
+    }
+  };
+
   return (
     <nav className="sticky top-22 z-30 bg-white shadow-md cursor-pointer">
-      <div className="relative flex items-center px-6 py-3 container mx-auto ">
+      <div className="relative flex items-center px-6 py-3 container mx-auto">
         {/* Left Arrow */}
         <button
           onClick={() => scroll('left')}
@@ -84,17 +144,38 @@ export default function Navbar() {
         {/* Menu Items */}
         <div
           ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto whitespace-nowrap px-12 py-2 scroll-smooth scrollbar-hide"
+          className="flex gap-6 overflow-x-auto whitespace-nowrap px-12 py-2 scroll-smooth scrollbar-hide relative"
         >
           {menuItems.map(item => (
             <button
               key={item}
-              className="relative group text-gray-700 text-sm font-medium flex-shrink-0 py-2 px-1 transition-all duration-300 hover:text-purple-600 cursor-pointer"
+              onMouseEnter={() => handleMenuItemHover(item)}
+              onMouseLeave={handleMenuItemLeave}
+              className={`relative group text-gray-700 text-sm font-medium flex-shrink-0 py-2 px-1 transition-all duration-300 cursor-pointer
+              ${activeMegaMenu === item ? 'text-purple-600' : 'hover:text-purple-600'}`}
             >
-              {item}
+              <div className="flex items-center gap-2">
+                {/* ICON (only if exists) */}
+                {/* {menuIcons[item] && (
+                  <img
+                    src={menuIcons[item]}
+                    alt={item}
+                    className="w-4 h-4 object-contain"
+                  />
+                )} */}
+                {menuIcons[item] && (
+                  <span className="text-gray-600 group-hover:text-purple-600 transition">
+                    {menuIcons[item]}
+                  </span>
+                )}
+                <span>{item}</span>
+              </div>
 
               {/* underline animation */}
-              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-purple-600 transition-all duration-300 group-hover:w-full"></span>
+              <span
+                className={`absolute left-0 bottom-0 h-[2px] bg-purple-600 transition-all duration-300
+                ${activeMegaMenu === item ? 'w-full' : 'w-0 group-hover:w-full'}`}
+              ></span>
             </button>
           ))}
         </div>
@@ -112,6 +193,21 @@ export default function Navbar() {
           <span className="text-sm text-gray-500">❯</span>
         </button>
       </div>
+
+      {/* Mega Menu Dropdown - Positioned absolutely below navbar */}
+      {megaMenuItems.includes(activeMegaMenu || '') && (
+        <div
+          ref={megaMenuRef}
+          onMouseEnter={() => setMouseOverMenu(true)}
+          onMouseLeave={() => {
+            setMouseOverMenu(false);
+            setActiveMegaMenu(null);
+          }}
+          className="absolute left-0 right-0 top-full container z-50 "
+        >
+          <MegaMenu category={activeMegaMenu} isOpen={!!activeMegaMenu} />
+        </div>
+      )}
     </nav>
   );
 }
