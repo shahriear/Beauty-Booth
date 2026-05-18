@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import CartDrawer from '../ui/CartDrawer';
 import useCartStore from '../store/useCartStore';
+import { Search } from 'lucide-react';
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -20,17 +21,18 @@ export default function Header() {
 
           {/* Search */}
           <div className="flex-grow max-w-md">
-            <div className="flex items-center bg-gray-100 rounded-full px-4 py-2">
+            <div className="flex items-center bg-gray-100 rounded-full px-4 py-1 border border-gray-300 hover:border-gray-600">
               <input
                 type="text"
                 placeholder="What are you looking for?"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="bg-transparent flex-grow outline-none text-sm"
+                className="bg-transparent flex-grow outline-none text-[16px]"
               />
 
-              <button className="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-full transition">
-                🔍
+              <button className="bg-pink-500 hover:bg-pink-800 text-white p-1.5 rounded-full transition ">
+                
+              <Search size={20}/>
               </button>
             </div>
           </div>
