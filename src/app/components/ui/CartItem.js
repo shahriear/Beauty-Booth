@@ -40,6 +40,7 @@
 
 import toast from 'react-hot-toast';
 import useCartStore from '../store/useCartStore';
+import { Minus, Plus } from 'lucide-react';
 
 export default function CartItem({ item }) {
   const removeFromCart = useCartStore(state => state.removeFromCart);
@@ -49,10 +50,10 @@ export default function CartItem({ item }) {
   const decreaseQuantity = useCartStore(state => state.decreaseQuantity);
 
   return (
-    <div className="flex gap-4 border-b pb-4">
+    <div className="flex gap-4 border-b border-gray-300 pb-3">
       {/* IMAGE */}
       <img
-        src={item.image || '/images/placeholder.webp'}
+        src={item.image || '/images/No-Product-Image.png'}
         alt={item.name}
         className="w-20 h-20 object-cover rounded-lg bg-gray-100"
       />
@@ -64,65 +65,65 @@ export default function CartItem({ item }) {
           {item.category}
         </p>
 
-        <h4 className="font-semibold text-sm">{item.name}</h4>
+        <h4 className="font-extralight text-sm">{item.name}</h4>
 
         {/* PRICE */}
-        <div className="flex items-center gap-2 mt-2">
-          {/* ORIGINAL */}
-          <span className="line-through text-gray-400 text-xs">
-            ৳ {item.originalPrice}
-          </span>
+        <div className="flex justify-between mt-2">
+          <div className="flex gap-2 items-center">
+            {/* ORIGINAL */}
+            <span className="line-through text-gray-400 text-xs">
+              ৳ {item.originalPrice}
+            </span>
 
-          {/* DISCOUNT */}
-          <span className="text-pink-600 font-bold">
-            ৳ {item.discountedPrice}
-          </span>
-        </div>
+            {/* DISCOUNT */}
+            <span className="text-pink-600 font-bold">
+              ৳ {item.discountedPrice}
+            </span>
+          </div>
+          <div>
+            {/* DECREASE */}
+            <button
+              onClick={() => {
+                (decreaseQuantity(item.id),
+                  toast.success('Cart updated', {
+                    position: 'top-center',
+                  }));
+              }}
+              className="px-2 border text-gray-400 hover:bg-gray-100 transition"
+            >
+              <Minus size={15} />
+            </button>
 
-        {/* QUANTITY */}
-        <div className="flex items-center gap-3 mt-4">
-          {/* DECREASE */}
-          <button
-            onClick={() => {
-              (decreaseQuantity(item.id),
+            {/* QUANTITY */}
+            <span className="font-light mx-1 text-[15px] ">{item.quantity}</span>
+
+            {/* INCREASE */}
+            <button
+              onClick={() => {
+                increaseQuantity(item.id);
                 toast.success('Cart updated', {
-                  position: 'top-center',
-                }));
-            }}
-            className="px-4 border text-gray-400 bg-gray-200 hover:bg-gray-300 transition"
-          >
-            -
-          </button>
-
-          {/* QUANTITY */}
-          <span className="font-semibold">{item.quantity}</span>
-
-          {/* INCREASE */}
-          <button
-            onClick={() => {
-              increaseQuantity(item.id);
-              toast.success('Cart updated', {
-                position: 'top-centerr',
-              });
-            }}
-            className="px-4 border text-gray-400 bg-gray-200 hover:bg-gray-300 transition"
-          >
-            +
-          </button>
-
-          {/* REMOVE */}
-          <button
-            onClick={() => {
-              removeFromCart(item.id);
-              toast.success('Product removed', {
-                position: 'top-center',
-              });
-            }}
-            className="ml-auto text-red-500 hover:text-red-700 text-xs font-semibold transition"
-          >
-            Remove
-          </button>
+                  position: 'top-centerr',
+                });
+              }}
+              className="px-2  border text-gray-400  hover:bg-gray-100 transition"
+            >
+              <Plus size={15} />
+            </button>
+          </div>
         </div>
+
+        {/* REMOVE */}
+        <button
+          onClick={() => {
+            removeFromCart(item.id);
+            toast.success('Product removed', {
+              position: 'top-center',
+            });
+          }}
+          className="m-auto text-red-500 hover:text-red-700 text-xs font-semibold transition cursor-pointer"
+        >
+          Remove
+        </button>
       </div>
     </div>
   );

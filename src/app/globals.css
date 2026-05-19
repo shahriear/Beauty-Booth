@@ -858,3 +858,16 @@ video popup modal ---- */
 .swiper-slide-prev {
   transform: scale(1) !important;
 }
+/*--------- scrollbar search input--------- */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #f8a9d75c;
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}

@@ -107,13 +107,13 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-19 z-30 bg-white shadow-md">
+    <nav className="sticky top-16.5 z-30 bg-white shadow-md">
       <div className="relative flex items-center px-6 py-3 container mx-auto">
         {/* LEFT ARROW */}
         <button
           onClick={() => scroll('left')}
           className={`absolute left-2 top-1/2 -translate-y-1/2 z-10
-          w-9 h-9 flex items-center justify-center
+          w-8 h-8 flex items-center justify-center
           bg-white rounded-full shadow border border-gray-300
           transition-all duration-300
           ${mounted && showLeftArrow ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -155,7 +155,7 @@ export default function Navbar() {
         <button
           onClick={() => scroll('right')}
           className={`absolute right-2 top-1/2 -translate-y-1/2 z-10
-          w-9 h-9 flex items-center justify-center
+          w-8 h-8 flex items-center justify-center
           bg-white rounded-full shadow border border-gray-300
           transition-all duration-300
           ${mounted && showRightArrow ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
