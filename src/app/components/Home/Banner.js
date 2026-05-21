@@ -6,6 +6,7 @@ const bannerImages = [
   '/images/banner-Img/banner-1.webp',
   '/images/banner-Img/banner-2.webp',
   '/images/banner-Img/banner-3.webp',
+  '/images/banner-Img/banner-4.webp',
 ];
 
 export default function Banner() {

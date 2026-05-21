@@ -86,6 +86,101 @@
 
 // export default useCartStore;
 
+// import toast from 'react-hot-toast';
+// import { create } from 'zustand';
+// import { persist } from 'zustand/middleware';
+
+// const useCartStore = create(
+//   persist(
+//     (set, get) => ({
+//       cartItems: [],
+
+//       // ADD TO CART
+//       addToCart: product => {
+//         const items = get().cartItems;
+
+//         const existing = items.find(item => item.id === product.id);
+
+//         // already exists
+//         if (existing) {
+//           set({
+//             cartItems: items.map(item =>
+//               item.id === product.id
+//                 ? {
+//                     ...item,
+//                     quantity: item.quantity + 1,
+//                   }
+//                 : item,
+//             ),
+//           });
+//         } else {
+//           set({
+//             cartItems: [
+//               ...items,
+//               {
+//                 ...product,
+//                 quantity: 1,
+//               },
+//             ],
+//           });
+//         }
+//         // SAME TOAST EVERY TIME
+//         {toast.success('Cart updated', {
+//           position: 'top-centerr',
+//         });};
+//       },
+
+//       // INCREASE QUANTITY
+//       increaseQuantity: id => {
+//         set({
+//           cartItems: get().cartItems.map(item =>
+//             item.id === id
+//               ? {
+//                   ...item,
+//                   quantity: item.quantity + 1,
+//                 }
+//               : item,
+//           ),
+//         });
+//       },
+
+//       // DECREASE QUANTITY
+//       decreaseQuantity: id => {
+//         set({
+//           cartItems: get()
+//             .cartItems.map(item =>
+//               item.id === id
+//                 ? {
+//                     ...item,
+//                     quantity: item.quantity - 1,
+//                   }
+//                 : item,
+//             )
+//             .filter(item => item.quantity > 0),
+//         });
+//       },
+
+//       // REMOVE ITEM
+//       removeFromCart: id => {
+//         set({
+//           cartItems: get().cartItems.filter(item => item.id !== id),
+//         });
+//       },
+
+//       // CLEAR CART
+//       clearCart: () =>
+//         set({
+//           cartItems: [],
+//         }),
+//     }),
+//     {
+//       name: 'cart-storage',
+//     },
+//   ),
+// );
+
+// export default useCartStore;
+
 import toast from 'react-hot-toast';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -95,13 +190,27 @@ const useCartStore = create(
     (set, get) => ({
       cartItems: [],
 
+      // POPUP STATE
+      cartPopupOpen: false,
+      lastAddedProduct: null,
+
+      openCartPopup: product =>
+        set({
+          cartPopupOpen: true,
+          lastAddedProduct: product,
+        }),
+
+      closeCartPopup: () =>
+        set({
+          cartPopupOpen: false,
+        }),
+
       // ADD TO CART
       addToCart: product => {
         const items = get().cartItems;
 
         const existing = items.find(item => item.id === product.id);
 
-        // already exists
         if (existing) {
           set({
             cartItems: items.map(item =>
@@ -124,13 +233,16 @@ const useCartStore = create(
             ],
           });
         }
-        // SAME TOAST EVERY TIME
-        {toast.success('Cart updated', {
-          position: 'top-centerr',
-        });};
+
+        // OPEN POPUP
+        get().openCartPopup(product);
+
+        toast.success('Cart updated', {
+          position: 'top-center',
+        });
       },
 
-      // INCREASE QUANTITY
+      // INCREASE
       increaseQuantity: id => {
         set({
           cartItems: get().cartItems.map(item =>
@@ -144,7 +256,7 @@ const useCartStore = create(
         });
       },
 
-      // DECREASE QUANTITY
+      // DECREASE
       decreaseQuantity: id => {
         set({
           cartItems: get()
@@ -160,14 +272,14 @@ const useCartStore = create(
         });
       },
 
-      // REMOVE ITEM
+      // REMOVE
       removeFromCart: id => {
         set({
           cartItems: get().cartItems.filter(item => item.id !== id),
         });
       },
 
-      // CLEAR CART
+      // CLEAR
       clearCart: () =>
         set({
           cartItems: [],

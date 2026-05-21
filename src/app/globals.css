@@ -500,12 +500,12 @@ video popup modal ---- */
 .video-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.694);
+  background: rgba(0, 0, 0, 0.394);
   backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99999;
+  z-index: 99;
   padding: 20px;
 }
 

@@ -4,6 +4,7 @@ import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
 import Navbar from './components/layout/Navbar';
 import './globals.css';
+import AddToCartPopup from './components/ui/AddToCartPopup';
 
 export const metadata = {
   title: 'Beauty Booth - Beauty & Cosmetics',
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
         {children}
         <Footer />
         <FloatingButtons />
+        <AddToCartPopup />
       </body>
     </html>
   );
