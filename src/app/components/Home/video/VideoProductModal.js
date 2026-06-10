@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import Link from 'next/link';
 import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react';
 import useCartStore from '../../store/useCartStore';
 
@@ -222,7 +223,12 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
             onMouseMove={handleMouseMove}
           >
             {selectedVideo?.products?.map(product => (
-              <div className="related-product-card group" key={product.id}>
+              <Link
+                href={`/product/${product.slug}`}
+                className="related-product-card group"
+                key={product.id}
+                onClick={closeVideoModal}
+              >
                 {/* IMAGE WRAPPER */}
                 <div className="product-image-wrap">
                   <span className="text-gray-400 text-sm">Product Image</span>
@@ -232,7 +238,11 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
                   )}
 
                   <button
-                    onClick={() => addToCart(product)}
+                    onClick={e => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      addToCart(product);
+                    }}
                     className="add-btn"
                   >
                     +
@@ -243,13 +253,13 @@ function VideoProductModal({ selectedVideo, closeVideoModal }) {
                 <div className="related-product-info">
                   <p className="related-brand">{product.brand}</p>
                   <h5>{product.name}</h5>
-                  
+
                   <div className="related-price">
                     <s>৳{product.originalPrice}</s>
                     <span>৳{product.discountedPrice}</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           <div className="products-arrows">

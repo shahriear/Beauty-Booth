@@ -251,10 +251,14 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { X, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
+import { getProductById } from '@/data/products';
+import { useApi } from '@/hooks/useApi';
+import { getRelatedProductsService } from '@/services/productService';
 import useCartStore from '../store/useCartStore';
 
 const Slider = dynamic(() => import('react-slick'), {
@@ -285,8 +289,16 @@ function PrevArrow({ onClick }) {
 
 export default function AddToCartPopup() {
   const [mounted, setMounted] = useState(false);
-  const { cartPopupOpen, closeCartPopup, cartItems, addToCart } =
+  const { cartPopupOpen, closeCartPopup, cartItems, addToCart, lastAddedProduct } =
     useCartStore();
+
+  const { data: peopleAlsoBuy } = useApi(
+    () =>
+      lastAddedProduct?.id
+        ? getRelatedProductsService(lastAddedProduct.id, 6)
+        : Promise.resolve([]),
+    [lastAddedProduct?.id],
+  );
   // const { cartPopupOpen, closeCartPopup, cartItems } = useCartStore();
   // const addToCart = useCartStore(state => state.addToCart);
 
@@ -317,13 +329,15 @@ export default function AddToCartPopup() {
   // IMPORTANT
   if (!mounted) return null;
 
+  const recommendations = peopleAlsoBuy?.length ? peopleAlsoBuy : cartItems;
+
   const settings = {
     dots: false,
-    infinite: cartItems.length > 3,
+    infinite: recommendations.length > 3,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-    arrows: cartItems.length > 3,
+    arrows: recommendations.length > 3,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
@@ -368,7 +382,7 @@ export default function AddToCartPopup() {
         <div className="flex items-center gap-3 mb-6">
           <CheckCircle size={20} className="text-green-500" />
 
-          <h2 className="text-xl font-bold">1 item added to cart</h2>
+          <h2 className="text-xl font-bold">Item added to cart</h2>
         </div>
 
         {/* BUTTONS */}
@@ -390,9 +404,17 @@ export default function AddToCartPopup() {
 
         {/* SLIDER */}
         <Slider {...settings}>
-          {cartItems.map(item => (
+          {recommendations.map(item => {
+            const slug = item.slug || getProductById(item.id)?.slug;
+            if (!slug) return null;
+
+            return (
             <div key={item.id} className="px-2">
-              <div className="border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl transition bg-white">
+              <Link
+                href={`/product/${slug}`}
+                onClick={closeCartPopup}
+                className="block border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl transition bg-white"
+              >
                 {/* IMAGE */}
                 {/* <div className="h-55 bg-gray-100 flex items-center justify-center relative">
                   <span className="text-gray-400">Product Image</span>
@@ -407,13 +429,13 @@ export default function AddToCartPopup() {
                   {/* SALE BADGE */}
                   <span
                     className="
-      absolute top-4 left-4
-      bg-pink-600 text-white
-      text-xs font-bold
-      px-3 py-1 rounded-full
-      transition-all duration-300
-      group-hover:opacity-0
-      group-hover:scale-75
+                  absolute top-4 left-4
+                  bg-pink-600 text-white
+                  text-xs font-bold
+                  px-3 py-1 rounded-full
+                  transition-all duration-300
+                  group-hover:opacity-0
+                  group-hover:scale-75
     "
                   >
                     ON SALE
@@ -421,7 +443,22 @@ export default function AddToCartPopup() {
 
                   {/* ADD BUTTON */}
                   <button
-                    onClick={() => addToCart(item)}
+                    onClick={e => {
+                      e.preventDefault();
+                        e.stopPropagation();
+                          // console.log('ADDING ITEM:', item);
+                      addToCart({
+                        id: item.id,
+                        name: item.name,
+                        slug: item.slug,
+                        image: item.image,
+                        price: item.price,
+                        originalPrice: item.originalPrice,
+                        discountedPrice: item.discountedPrice ?? item.price,
+                        category: item.category || 'combo',
+                        quantity: 1,
+                      });
+                    }}
                     className="
       absolute top-4 right-4
       w-10 h-10 rounded-full
@@ -459,13 +496,14 @@ export default function AddToCartPopup() {
                     </span>
 
                     <span className="text-lg font-bold text-pink-600">
-                      ৳{item.discountedPrice}
+                      ৳{item.discountedPrice ?? item.price}
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
-          ))}
+            );
+          })}
         </Slider>
       </div>
     </div>

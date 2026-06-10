@@ -215,6 +215,7 @@ import AccountModal from '../ui/account/AccountModal';
 import useCartStore from '../store/useCartStore';
 
 import { Search, X, User, ShoppingCart } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -233,9 +234,9 @@ export default function Header() {
         <div className="flex items-center justify-between gap-6 container mx-auto">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="#" className="text-2xl font-bold">
+            <Link href="/" className="text-2xl font-bold">
               Beauty Booth
-            </a>
+            </Link>
           </div>
 
           {/* Search */}

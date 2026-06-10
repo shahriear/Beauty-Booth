@@ -12,6 +12,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary-pink: #e84882;
+  --color-purple: #8b5cf6;
 }
 /* @utility container {
   margin-inline: auto;
@@ -552,7 +554,7 @@ video popup modal ---- */
   width: 220px;
   background: #fff;
   transition: 0.3s ease;
-  cursor:grab;
+  cursor: grab;
 }
 
 .related-product-card:hover {

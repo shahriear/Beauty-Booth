@@ -1,180 +1,161 @@
+// 'use client';
+
+// import dynamic from 'next/dynamic';
+// import { useState, useEffect } from 'react';
+// import SectionLoader from '@/app/components/ui/SectionLoader';
+// import { useApi } from '@/hooks/useApi';
+// import { getBoishakhiTabs } from '@/services/categoryService';
+// import { getBoishakhiProducts } from '@/services/productService';
+// import useCartStore from '../store/useCartStore';
+
+// const Slider = dynamic(() => import('react-slick'), { ssr: false });
+
+// export default function BoishakhiOffer() {
+//   const [mounted, setMounted] = useState(false);
+//   const [activeCategory, setActiveCategory] = useState('cleansers');
+//   const addToCart = useCartStore(state => state.addToCart);
+
+//   const { data: tabs, loading: tabsLoading } = useApi(() => getBoishakhiTabs(), []);
+//   const { data: displayedProducts, loading: productsLoading } = useApi(
+//     () => getBoishakhiProducts(activeCategory, 10),
+//     [activeCategory],
+//   );
+
+//   useEffect(() => {
+//     setMounted(true);
+//   }, []);
+
+//   const settings = {
+//     dots: false,
+//     infinite: true,
+//     speed: 600,
+//     slidesToShow: 5,
+//     slidesToScroll: 1,
+//     swipeToSlide: true,
+//     touchThreshold: 10,
+//     draggable: true,
+//     arrows: true,
+//     responsive: [
+//       { breakpoint: 1400, settings: { slidesToShow: 4 } },
+//       { breakpoint: 1024, settings: { slidesToShow: 3 } },
+//       { breakpoint: 768, settings: { slidesToShow: 2 } },
+//       { breakpoint: 480, settings: { slidesToShow: 1 } },
+//     ],
+//   };
+
+//   if (!mounted || tabsLoading) return <SectionLoader />;
+
+//   return (
+//     <section className="px-6 py-12 bg-gray-50 rounded-3xl">
+//       <div className="flex items-center justify-between mb-6">
+//         <h2 className="text-3xl font-bold text-gray-800">BOISHAKHI OFFER</h2>
+//         <a href="#" className="text-pink-600 font-semibold hover:text-pink-700 transition">
+//           See All →
+//         </a>
+//       </div>
+
+//       <div className="flex justify-center gap-3 mb-8 flex-wrap">
+//         {(tabs || []).map(category => (
+//           <button
+//             key={category.value}
+//             onClick={() => setActiveCategory(category.value)}
+//             className={`px-6 py-2 rounded-full font-semibold text-sm transition-all duration-300 cursor-pointer ${
+//               activeCategory === category.value
+//                 ? 'bg-gradient-to-r from-indigo-950 to-violet-800 text-white shadow-lg shadow-purple-300'
+//                 : 'bg-white border-2 border-purple-200 text-gray-700 hover:border-purple-400'
+//             }`}
+//           >
+//             {category.label}
+//           </button>
+//         ))}
+//       </div>
+
+//       {productsLoading ? (
+//         <SectionLoader className="py-8" />
+//       ) : (
+//         <Slider {...settings}>
+//           {(displayedProducts || []).map(product => (
+//             <div key={product.id} className="px-2 pb-6">
+//               <div className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-grab active:cursor-grabbing">
+//                 <div className="w-full h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
+//                   <span className="text-gray-400 text-sm">Product Image</span>
+//                   <span className="absolute top-3 left-3 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full transition-all duration-300 group-hover:opacity-0 group-hover:scale-90">
+//                     {product.badge}
+//                   </span>
+//                   <button
+//                     onClick={() => addToCart(product)}
+//                     className="absolute top-3 right-3 w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center text-xl shadow-lg opacity-0 translate-y-[-10px] transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110"
+//                   >
+//                     +
+//                   </button>
+//                 </div>
+//                 <div className="p-4">
+//                   <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+//                     {product.category}
+//                   </p>
+//                   <h3 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2 min-h-10">
+//                     {product.name}
+//                   </h3>
+//                   <div className="flex items-center gap-2">
+//                     <span className="text-xs text-gray-400 line-through">
+//                       ৳{product.originalPrice}
+//                     </span>
+//                     <span className="text-lg font-bold text-pink-600">
+//                       ৳{product.discountedPrice}
+//                     </span>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           ))}
+//         </Slider>
+//       )}
+//     </section>
+//   );
+// }
+
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useApi } from '@/hooks/useApi';
+import { getBoishakhiTabs } from '@/services/categoryService';
+import { getBoishakhiProducts } from '@/services/productService';
 import useCartStore from '../store/useCartStore';
 
-const Slider = dynamic(() => import('react-slick'), { ssr: false });
+/* ---------------- CACHE ---------------- */
+let tabCache = {};
+let productCache = {};
 
-// Product data organized by category
-const allProducts = {
-  cleansers: [
-    {
-      id: 'cleansers-1',
-      name: 'Gentle Salicylic Acid Cleanser (100ml)',
-      originalPrice: ' 1199',
-      discountedPrice: ' 999',
-      category: 'Cleansers',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'cleansers-2',
-      name: 'Beauty Of Joseeon Cleansing',
-      originalPrice: ' 1620',
-      discountedPrice: ' 1299',
-      category: 'Cleansers',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'cleansers-3',
-      name: 'Foaming Deep Cleanser (120ml)',
-      originalPrice: ' 1400',
-      discountedPrice: ' 1100',
-      category: 'Cleansers',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'cleansers-4',
-      name: 'Gentle Exfoliating Cleanser (100ml)',
-      originalPrice: ' 1300',
-      discountedPrice: ' 1050',
-      category: 'Cleansers',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'cleansers-5',
-      name: 'Hydrating Cleanser Milk (150ml)',
-      originalPrice: ' 1500',
-      discountedPrice: ' 1200',
-      category: 'Cleansers',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'cleansers-6',
-      name: 'Gentle Salicylic Acid Cleanser (100ml)',
-      originalPrice: ' 1199',
-      discountedPrice: ' 999',
-      category: 'Cleansers',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'cleansers-7',
-      name: 'Gentle Salicylic Acid Cleanser (100ml)',
-      originalPrice: ' 1199',
-      discountedPrice: ' 999',
-      category: 'Cleansers',
-      badge: 'ON SALE',
-    },
-  ],
-  serums: [
-    {
-      id: 'serums-1',
-      name: 'Serums & Treatments Premium',
-      originalPrice: ' 2099',
-      discountedPrice: '1699',
-      category: 'Serums & Treatments',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'serums-2',
-      name: 'Hyaluronic Acid Serum (30ml)',
-      originalPrice: ' 1800',
-      discountedPrice: ' 1450',
-      category: 'Serums & Treatments',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'serums-3',
-      name: 'Vitamin C Brightening Serum (50ml)',
-      originalPrice: ' 2200',
-      discountedPrice: ' 1750',
-      category: 'Serums & Treatments',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'serums-4',
-      name: 'Niacinamide Treatment Serum (40ml)',
-      originalPrice: ' 1900',
-      discountedPrice: ' 1550',
-      category: 'Serums & Treatments',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'serums-5',
-      name: 'Peptide Rich Serum (35ml)',
-      originalPrice: ' 2000',
-      discountedPrice: ' 1600',
-      category: 'Serums & Treatments',
-      badge: 'ON SALE',
-    },
-  ],
-  moisturizing: [
-    {
-      id: 'moisturizing-1',
-      name: 'Shiseido Perfect Whip Cleansing (120ml)',
-      originalPrice: ' 1200',
-      discountedPrice: ' 990',
-      category: 'Moisturizing Cream',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'moisturizing-2',
-      name: 'Deep Moisturizing Cream (50ml)',
-      originalPrice: ' 1500',
-      discountedPrice: ' 1199',
-      category: 'Moisturizing Cream',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'moisturizing-3',
-      name: 'Night Recovery Cream (60ml)',
-      originalPrice: ' 1800',
-      discountedPrice: ' 1450',
-      category: 'Moisturizing Cream',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'moisturizing-4',
-      name: 'SPF 50 Moisturizing Cream (40ml)',
-      originalPrice: ' 1650',
-      discountedPrice: ' 1350',
-      category: 'Moisturizing Cream',
-      badge: 'ON SALE',
-    },
-    {
-      id: 'moisturizing-5',
-      name: 'Lightweight Day Cream (75ml)',
-      originalPrice: ' 1400',
-      discountedPrice: ' 1100',
-      category: 'Moisturizing Cream',
-      badge: 'ON SALE',
-    },
-  ],
-};
-
-const categories = [
-  { label: 'Cleansers', value: 'cleansers' },
-  { label: 'Serums & Treatments', value: 'serums' },
-  { label: 'Moisturizing Cream', value: 'moisturizing' },
-];
+const Slider = dynamic(() => import('react-slick'), {
+  ssr: false,
+});
 
 export default function BoishakhiOffer() {
-  const [mounted, setMounted] = useState(false);
   const [activeCategory, setActiveCategory] = useState('cleansers');
-  const [displayedProducts, setDisplayedProducts] = useState(
-    allProducts.cleansers,
-  );
   const addToCart = useCartStore(state => state.addToCart);
 
-  useEffect(() => {
-    setMounted(true);
+  /* -------- TABS -------- */
+  const { data: tabs, loading: tabsLoading } = useApi(async () => {
+    if (tabCache.all) return tabCache.all;
+
+    const res = await getBoishakhiTabs();
+    tabCache.all = res;
+    return res;
   }, []);
 
-  // Update products when category changes
-  const handleCategoryChange = categoryValue => {
-    setActiveCategory(categoryValue);
-    setDisplayedProducts(allProducts[categoryValue]);
-  };
+  /* -------- PRODUCTS (PER CATEGORY CACHE) -------- */
+  const { data: displayedProducts, loading: productsLoading } =
+    useApi(async () => {
+      if (productCache[activeCategory]) {
+        return productCache[activeCategory];
+      }
+
+      const res = await getBoishakhiProducts(activeCategory, 10);
+      productCache[activeCategory] = res;
+      return res;
+    }, [activeCategory]);
 
   const settings = {
     dots: false,
@@ -194,12 +175,15 @@ export default function BoishakhiOffer() {
     ],
   };
 
-  if (!mounted) return null;
+  const tabsData = tabs || [];
+  const products = displayedProducts || [];
 
   return (
     <section className="px-6 py-12 bg-gray-50 rounded-3xl">
+      {/* HEADER */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-3xl font-bold text-gray-800">BOISHAKHI OFFER</h2>
+
         <a
           href="#"
           className="text-pink-600 font-semibold hover:text-pink-700 transition"
@@ -208,81 +192,93 @@ export default function BoishakhiOffer() {
         </a>
       </div>
 
-      {/* Category Filter Tabs */}
+      {/* TABS */}
       <div className="flex justify-center gap-3 mb-8 flex-wrap">
-        {categories.map(category => (
-          <button
-            key={category.value}
-            onClick={() => handleCategoryChange(category.value)}
-            className={`px-6 py-2 rounded-full font-semibold text-sm transition-all duration-300 cursor-pointer ${
-              activeCategory === category.value
-                ? 'bg-gradient-to-r from-indigo-950 to-violet-800 text-white shadow-lg shadow-purple-300'
-                : 'bg-white border-2 border-purple-200 text-gray-700 hover:border-purple-400'
-            }`}
-          >
-            {category.label}
-          </button>
-        ))}
+        {tabsLoading && !tabCache.all
+          ? Array.from({ length: 5 }).map((_, i) => (
+              <div
+                key={i}
+                className="w-24 h-10 bg-gray-200 animate-pulse rounded-full"
+              />
+            ))
+          : tabsData.map(category => (
+              <button
+                key={category.value}
+                onClick={() => setActiveCategory(category.value)}
+                className={`px-6 py-2 rounded-full font-semibold text-sm transition-all duration-300 cursor-pointer ${
+                  activeCategory === category.value
+                    ? 'bg-gradient-to-r from-indigo-950 to-violet-800 text-white shadow-lg shadow-purple-300'
+                    : 'bg-white border-2 border-purple-200 text-gray-700 hover:border-purple-400'
+                }`}
+              >
+                {category.label}
+              </button>
+            ))}
       </div>
 
-      {/* Products Carousel with Draggable Feature */}
-      <Slider {...settings}>
-        {displayedProducts.map(product => (
-          <div key={product.id} className="px-2 pb-6">
-            <div className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-grab active:cursor-grabbing">
-              {/* Product Image Placeholder */}
-              {/* <div className="w-full h-48 bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center relative overflow-hidden">
-                <span className="text-gray-400 text-sm text-center px-2">
-                  Product Image
-                </span>
+      {/* PRODUCTS */}
+      {productsLoading && !productCache[activeCategory] ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-72 bg-gray-200 animate-pulse rounded-lg"
+            />
+          ))}
+        </div>
+      ) : (
+        <Slider {...settings}>
+          {products.map(product => (
+            <div key={product.id} className="px-2 pb-6">
+              <Link
+                href={`/product/${product.slug}`}
+                className="group relative block bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
+              >
+                {/* IMAGE */}
+                <div className="w-full h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
+                  <span className="text-gray-400 text-sm">Product Image</span>
 
-                
-                <span className="absolute top-3 left-3 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                  ON SALE
-                </span>
-              </div> */}
-              <div className="w-full h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
-                <span className="text-gray-400 text-sm">Product Image</span>
-
-                {/*  SALE BADGE */}
-                <span className="absolute top-3 left-3 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full transition-all duration-300 group-hover:opacity-0 group-hover:scale-90">
-                  {product.badge}
-                </span>
-
-                {/* ➕ ADD BUTTON */}
-                <button
-                  onClick={() => addToCart(product)}
-                  className="absolute top-3 right-3 w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center text-xl shadow-lg 
-                   opacity-0 translate-y-[-10px] transition-all duration-300 
-                   group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110"
-                >
-                  +
-                </button>
-              </div>
-
-              {/* Product Info */}
-              <div className="p-4">
-                <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
-                  {product.category}
-                </p>
-                <h3 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2 min-h-10">
-                  {product.name}
-                </h3>
-
-                {/* Price */}
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-400 line-through">
-                    ৳{product.originalPrice}
+                  <span className="absolute top-3 left-3 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full transition-all duration-300 group-hover:opacity-0 group-hover:scale-90">
+                    {product.badge}
                   </span>
-                  <span className="text-lg font-bold text-pink-600">
-                    ৳{product.discountedPrice}
-                  </span>
+
+                  <button
+                    onClick={e => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      addToCart(product);
+                    }}
+                    className="absolute top-3 right-3 w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center text-xl shadow-lg opacity-0 translate-y-[-10px] transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110"
+                  >
+                    +
+                  </button>
                 </div>
-              </div>
+
+                {/* INFO */}
+                <div className="p-4">
+                  <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+                    {product.category}
+                  </p>
+
+                  <h3 className="text-sm font-semibold text-gray-800 mb-2 line-clamp-2 min-h-10">
+                    {product.name}
+                  </h3>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-400 line-through">
+                      ৳{product.originalPrice}
+                    </span>
+
+                    <span className="text-lg font-bold text-pink-600">
+                      ৳{product.discountedPrice}
+                    </span>
+                  </div>
+                </div>
+              </Link>
             </div>
-          </div>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
+      )}
     </section>
   );
 }

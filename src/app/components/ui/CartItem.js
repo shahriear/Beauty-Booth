@@ -69,15 +69,26 @@ export default function CartItem({ item }) {
 
         {/* PRICE */}
         <div className="flex justify-between mt-2">
-          <div className="flex gap-2 items-center">
-            {/* ORIGINAL */}
+          {/* <div className="flex gap-2 items-center">
+           
             <span className="line-through text-gray-400 text-xs">
               ৳ {item.originalPrice}
             </span>
 
-            {/* DISCOUNT */}
+      
             <span className="text-pink-600 font-bold">
               ৳ {item.discountedPrice}
+            </span>
+          </div> */}
+          <div className="flex gap-2 items-center">
+            {item.originalPrice && (
+              <span className="line-through text-gray-400 text-xs">
+                ৳ {item.originalPrice}
+              </span>
+            )}
+
+            <span className="text-pink-600 font-bold">
+              ৳ {item.discountedPrice ?? item.price}
             </span>
           </div>
           <div>
@@ -95,7 +106,9 @@ export default function CartItem({ item }) {
             </button>
 
             {/* QUANTITY */}
-            <span className="font-light mx-1 text-[15px] ">{item.quantity}</span>
+            <span className="font-light mx-1 text-[15px] ">
+              {item.quantity}
+            </span>
 
             {/* INCREASE */}
             <button

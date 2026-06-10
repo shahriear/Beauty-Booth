@@ -2,8 +2,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import VideoProductModal from '@/app/components/Home/video/VideoProductModal';
+import SectionLoader from '@/app/components/ui/SectionLoader';
+import { useApi } from '@/hooks/useApi';
+import { getFeaturedVideosService } from '@/services/bannerService';
+import Image from 'next/image';
 
 function VideoProductSlider({ featuredVideos }) {
+  if (!featuredVideos?.length) return null;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -233,7 +238,13 @@ function VideoProductSlider({ featuredVideos }) {
               </div> */}
               <div className="video-product-meta">
                 {video.productImage ? (
-                  <img src={video.productImage} alt={video.productName} />
+                  <Image
+                    src={video.productImage}
+                    alt={video.productName}
+                    width={80}
+                    height={80}
+                    className="rounded-md object-cover"
+                  />
                 ) : (
                   <div className="img-placeholder">No Image</div>
                 )}
@@ -259,7 +270,32 @@ function VideoProductSlider({ featuredVideos }) {
   );
 }
 
-export default VideoProductSlider;
+let featuredVideosCache = null;
+
+export default function FeaturedInVideos() {
+  const { data: featuredVideos, loading } = useApi(async () => {
+    if (featuredVideosCache) return featuredVideosCache;
+
+    const res = await getFeaturedVideosService();
+    featuredVideosCache = res;
+
+    return res;
+  }, []);
+
+  if (loading && !featuredVideosCache) {
+    return (
+      <section className="py-12">
+        <div className="h-[500px] rounded-2xl bg-gray-200 animate-pulse" />
+      </section>
+    );
+  }
+
+  return (
+    <VideoProductSlider
+      featuredVideos={featuredVideos || featuredVideosCache || []}
+    />
+  );
+}
 
 // 'use client';
 
