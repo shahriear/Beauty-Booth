@@ -52,6 +52,7 @@
 
 'use client';
 
+import Link from 'next/link';
 import Slider from 'react-slick';
 import { useApi } from '@/hooks/useApi';
 import { getTrendingBanners } from '@/services/bannerService';
@@ -106,18 +107,27 @@ export default function Trending() {
         </div>
       ) : (
         <Slider {...settings} className="trending-slider">
-          {images.map((image, index) => (
-            <div key={index} className="px-3">
-              <div className="w-full h-64 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition">
-                <img
-                  src={image}
-                  alt={`Trending ${index}`}
-                  className="w-full h-full object-cover hover:scale-105 transition duration-300"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          ))}
+          {images.map((item, index) => {
+            const image = typeof item === 'string' ? item : item.url;
+            const category =
+              typeof item === 'string' ? 'trending' : item.category;
+            return (
+              <Link
+                key={index}
+                href={`/${category}`}
+                className="px-3 block cursor-pointer"
+              >
+                <div className="w-full h-64 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition group">
+                  <img
+                    src={image}
+                    alt={`Trending ${index}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              </Link>
+            );
+          })}
         </Slider>
       )}
     </section>

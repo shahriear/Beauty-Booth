@@ -42,6 +42,7 @@
 
 'use client';
 
+import Link from 'next/link';
 import Slider from 'react-slick';
 import SectionLoader from '@/app/components/ui/SectionLoader';
 import { useApi } from '@/hooks/useApi';
@@ -84,16 +85,27 @@ export default function Banner() {
       {/* SLIDER (always mounted → no flicker) */}
       {images.length > 0 && (
         <Slider {...settings} className="rounded-xl overflow-hidden">
-          {images.map((image, index) => (
-            <div key={index} className="w-full h-96">
-              <img
-                src={image}
-                alt={`Banner ${index}`}
-                className="w-full h-full object-cover"
-                loading="eager"
-              />
-            </div>
-          ))}
+          {images.map((item, index) => {
+            const image = typeof item === 'string' ? item : item.url;
+            const category =
+              typeof item === 'string' ? 'banner' : item.category;
+            return (
+              <Link
+                key={index}
+                href={`/${category}`}
+                className="block cursor-pointer group"
+              >
+                <div className="w-full h-96 overflow-hidden rounded-xl">
+                  <img
+                    src={image}
+                    alt={`Banner ${index}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="eager"
+                  />
+                </div>
+              </Link>
+            );
+          })}
         </Slider>
       )}
     </section>

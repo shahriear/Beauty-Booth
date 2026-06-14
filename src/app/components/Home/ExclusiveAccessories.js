@@ -56,9 +56,9 @@
 // }
 'use client';
 
+import Link from 'next/link';
 import Slider from 'react-slick';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useApi } from '@/hooks/useApi';
 import { getExclusiveAccessoriesBanners } from '@/services/bannerService';
 
@@ -116,30 +116,39 @@ export default function ExclusiveAccessories() {
       </div>
 
       <Slider {...settings} className="trending-slider">
-        {images.map((image, index) => (
-          <div key={index} className="px-3">
-            <div className="relative overflow-hidden rounded-lg shadow-lg">
-              <div className="relative aspect-[16/9] w-full">
-                <Image
-                  src={image}
-                  alt={`Exclusive Accessories ${index + 1}`}
-                  fill
-                  sizes="(max-width:768px) 100vw, (max-width:1024px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
+        {images.map((item, index) => {
+          const imageUrl = typeof item === 'string' ? item : item.url;
+          const category =
+            typeof item === 'string' ? 'exclusive-accessories' : item.category;
+          return (
+            <Link
+              key={index}
+              href={`/${category}`}
+              className="px-3 block cursor-pointer"
+            >
+              <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition group">
+                <div className="relative aspect-[16/9] w-full">
+                  <Image
+                    src={imageUrl}
+                    alt={`Exclusive Accessories ${index + 1}`}
+                    fill
+                    sizes="(max-width:768px) 100vw, (max-width:1024px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
 
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-                <Link
-                  href="/accessories"
-                  className="px-5 py-2 bg-white/90 text-black text-sm rounded-full hover:bg-cyan-400 transition cursor-pointer"
-                >
-                  Shop Now →
-                </Link>
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                  <div
+                    className="px-5 py-2 bg-white/90 text-black text-sm rounded-full hover:bg-cyan-400 transition cursor-pointer"
+                    onClick={e => e.preventDefault()}
+                  >
+                    Shop Now →
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            </Link>
+          );
+        })}
       </Slider>
     </section>
   );

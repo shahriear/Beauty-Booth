@@ -171,8 +171,15 @@ const ROUTED_SLUGS = [
   'hair-care',
   'accessories',
   'bath-body-care',
+  'mom-baby-care',
+  'body-scrub',
+  'mens-care',
   'combo',
   'brands',
+  'eid-festive-sale',
+  'new',
+  'best-selling',
+  'bogo',
 ];
 
 const menuIcons = {
@@ -335,11 +342,7 @@ export default function Navbar() {
         {/* RIGHT ARROW */}
         <button
           onClick={() => scroll('right')}
-          className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow border border-gray-300 transition-all duration-300 ${
-            mounted && showRightArrow
-              ? 'opacity-100'
-              : 'opacity-0 pointer-events-none'
-          }`}
+          className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow border border-gray-300 transition-all duration-300 `}
         >
           ❯
         </button>

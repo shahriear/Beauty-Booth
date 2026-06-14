@@ -81,6 +81,7 @@
 
 'use client';
 
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useApi } from '@/hooks/useApi';
@@ -141,8 +142,12 @@ export default function FlatSalesPercentage() {
       ) : (
         <Slider {...settings}>
           {products.map((item, index) => (
-            <div key={item.id} className="px-2">
-              <a href="#" className="flex flex-col items-center text-center">
+            <Link
+              key={item.id}
+              href={`/${item.category || 'flat-sales-percentage'}`}
+              className="px-2 block cursor-pointer"
+            >
+              <div className="flex flex-col items-center text-center hover:opacity-80 transition group">
                 <div className="w-full">
                   <Image
                     src={item.productImg}
@@ -150,7 +155,7 @@ export default function FlatSalesPercentage() {
                     width={300}
                     height={200}
                     priority={index === 0}
-                    className="w-full h-auto rounded-xl object-contain"
+                    className="w-full h-auto rounded-xl object-contain group-hover:scale-110 transition-transform"
                   />
                 </div>
 
@@ -171,8 +176,8 @@ export default function FlatSalesPercentage() {
                 <p className="text-xs sm:text-sm text-gray-600 font-semibold">
                   {item.description}
                 </p>
-              </a>
-            </div>
+              </div>
+            </Link>
           ))}
         </Slider>
       )}
