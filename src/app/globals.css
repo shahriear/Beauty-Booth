@@ -873,3 +873,31 @@ video popup modal ---- */
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #9ca3af;
 }
+/* ============== banner======== */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #fff;            
+  background: rgb(255, 255, 255);
+  padding:6px;
+  border-radius: 50%;
+  backdrop-filter: blur(6px);
+  transition: 0.3s;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  width: 36px !important;
+  height: 36px !important;
+}
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgb(216, 214, 255);
+
+}
+
+/* arrow icon size */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 14px;
+  font-weight: bold;
+  
+}
