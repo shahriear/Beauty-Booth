@@ -33,9 +33,45 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 .container {
+  width: 100%;
   max-width: 1300px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 12px;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+/* Mobile-first product grid: show 2 products + partial 3rd on mobile */
+.product-grid-mobile {
+  display: grid;
+  grid-template-columns: repeat(2.2, minmax(0, 1fr));
+  gap: 0.5rem;
+  min-width: min-content;
+}
+
+@media (min-width: 768px) {
+  .product-grid-mobile {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-width: auto;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-grid-mobile {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
 }
 
 /* Hide horizontal scrollbars across all sections */
@@ -59,35 +95,64 @@ body {
   height: 6px;
 }
 
-/* Slick Slider Custom Styles */
+/* Slick Slider Custom Styles - Mobile First */
 .slick-slider {
   touch-action: pan-y;
 }
 
 .slick-arrow {
   z-index: 10 !important;
-  width: 40px !important;
-  height: 40px !important;
-  background-color: rgba(109, 104, 104, 0.5) !important;
+  width: 32px !important;
+  height: 32px !important;
+  background-color: rgba(109, 104, 104, 0.7) !important;
   border-radius: 50% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  transition: all 0.3s ease !important;
 }
+
+@media (min-width: 768px) {
+  .slick-arrow {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+
 .slick-prev {
-  left: 15px !important;
+  left: 8px !important;
+}
+
+@media (min-width: 768px) {
+  .slick-prev {
+    left: 15px !important;
+  }
 }
 
 .slick-next {
-  right: 15px !important;
+  right: 8px !important;
 }
+
+@media (min-width: 768px) {
+  .slick-next {
+    right: 15px !important;
+  }
+}
+
 .slick-arrow:hover {
-  background-color: rgba(0, 0, 0, 0.75) !important;
+  background-color: rgba(0, 0, 0, 0.85) !important;
+  transform: scale(1.05);
 }
 
 .slick-arrow::before {
   color: white !important;
-  font-size: 20px !important;
+  font-size: 16px !important;
+}
+
+@media (min-width: 768px) {
+  .slick-arrow::before {
+    font-size: 20px !important;
+  }
 }
 
 .slick-prev::before {
@@ -99,12 +164,25 @@ body {
 }
 
 .slick-dots {
-  bottom: 15px !important;
+  bottom: 12px !important;
+}
+
+@media (min-width: 768px) {
+  .slick-dots {
+    bottom: 15px !important;
+  }
 }
 
 .slick-dots li button::before {
   color: white !important;
   opacity: 0.5 !important;
+  font-size: 8px !important;
+}
+
+@media (min-width: 768px) {
+  .slick-dots li button::before {
+    font-size: 12px !important;
+  }
 }
 
 .slick-dots li.slick-active button::before {
@@ -166,35 +244,78 @@ body {
 /* ------------------------------------------------------ */
 .featured-videos {
   background: #fff;
-  margin-left: 30px;
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  .featured-videos {
+    margin-left: 30px;
+  }
 }
 
 .featured-videos-head {
   display: flex;
   /* justify-content: center; */
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 768px) {
+  .featured-videos-head {
+    margin-bottom: 15px;
+  }
 }
 
 .featured-videos-head h3 {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   line-height: 1.1;
+  font-size: 18px;
+}
+
+@media (min-width: 768px) {
+  .featured-videos-head h3 {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .featured-videos-head h3 {
+    font-size: 30px;
+  }
 }
 
 .video-stage {
   position: relative;
-  height: 620px;
+  height: 380px;
   overflow: hidden;
   display: grid;
   place-items: start center;
+}
+
+@media (min-width: 640px) {
+  .video-stage {
+    height: 485px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .video-stage {
+    height: 540px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .video-stage {
+    height: 620px;
+  }
 }
 
 .video-card {
   position: absolute;
   top: 0;
   left: 50%;
-  margin-left: -165px;
-  width: 240px;
+  width: min(82vw, 280px);
+  margin-left: calc(min(82vw, 280px) / -2);
   border: 0;
   border-radius: 14px;
   background: transparent;
@@ -212,10 +333,28 @@ body {
 .video-frame {
   position: relative;
   width: 100%;
-  height: 450px;
+  height: 280px;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #f0f0f0;
+}
+
+@media (min-width: 640px) {
+  .video-frame {
+    height: 320px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .video-frame {
+    height: 380px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .video-frame {
+    height: 450px;
+  }
 }
 
 .video-media {
@@ -369,36 +508,22 @@ body {
 @media (max-width: 1024px) {
   .hero {
     grid-template-columns: 1fr;
-    padding: 28px 20px;
+    padding: 20px;
   }
 
   .hero h2 {
-    font-size: 32px;
+    font-size: 24px;
   }
 
   .category-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    padding: 0 12px;
   }
 
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .featured-videos-head h3 {
-    font-size: 30px;
-  }
-
-  .video-card {
-    width: 300px;
-    margin-left: -150px;
-  }
-
-  .video-frame {
-    height: 380px;
-  }
-
-  .video-stage {
-    height: 540px;
+    gap: 12px;
   }
 
   .brand-row {
@@ -410,7 +535,7 @@ body {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .promo-bar,
   .header {
     flex-direction: column;
@@ -425,40 +550,26 @@ body {
   .header,
   .nav,
   .promo-bar {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   .hero {
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: 12px;
+    margin-right: 12px;
+    padding: 20px 16px;
   }
 
   .header-icons {
     justify-content: flex-start;
+    gap: 8px;
   }
 
   .category-grid,
   .product-grid,
   .brand-row {
-    grid-template-columns: 1fr;
-  }
-
-  .featured-videos-head h3 {
-    font-size: 24px;
-  }
-
-  .video-card {
-    width: min(82vw, 320px);
-    margin-left: calc(min(82vw, 320px) / -2);
-  }
-
-  .video-frame {
-    height: 320px;
-  }
-
-  .video-stage {
-    height: 485px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .mobile-nav {
@@ -876,9 +987,9 @@ video popup modal ---- */
 /* ============== banner======== */
 .swiper-button-next,
 .swiper-button-prev {
-  color: #fff;            
+  color: #fff;
   background: rgb(255, 255, 255);
-  padding:6px;
+  padding: 6px;
   border-radius: 50%;
   backdrop-filter: blur(6px);
   transition: 0.3s;
@@ -891,7 +1002,6 @@ video popup modal ---- */
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
   background: rgb(216, 214, 255);
-
 }
 
 /* arrow icon size */
@@ -899,5 +1009,4 @@ video popup modal ---- */
 .swiper-button-prev::after {
   font-size: 14px;
   font-weight: bold;
-  
 }

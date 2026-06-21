@@ -261,12 +261,12 @@ export default function Navbar() {
   const handleMegaLeave = () => setActiveMegaMenu(null);
 
   return (
-    <nav className="sticky top-16.5 z-30 bg-white shadow-md">
-      <div className="relative flex items-center px-6 py-3 container mx-auto">
+    <nav className="sticky top-16 md:top-auto z-30 bg-white shadow-md">
+      <div className="relative flex items-center px-2 md:px-6 py-2 md:py-3 container mx-auto">
         {/* LEFT ARROW */}
         <button
           onClick={() => scroll('left')}
-          className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow border border-gray-300 transition-all duration-300 ${
+          className={`hidden md:flex absolute left-0 md:left-2 top-1/2 -translate-y-1/2 z-10 w-6 md:w-8 h-6 md:h-8 items-center justify-center bg-white rounded-full shadow border border-gray-300 transition-all duration-300 ${
             mounted && showLeftArrow
               ? 'opacity-100'
               : 'opacity-0 pointer-events-none'
@@ -278,20 +278,20 @@ export default function Navbar() {
         {/* MENU AREA */}
         <div
           ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto whitespace-nowrap px-12 py-2 scroll-smooth scrollbar-hide"
+          className="flex gap-2 md:gap-6 overflow-x-auto whitespace-nowrap px-6 md:px-12 py-2 scroll-smooth scrollbar-hide flex-grow"
         >
           {loading && !navCache
             ? Array.from({ length: 8 }).map((_, i) => (
                 <div
                   key={i}
-                  className="h-9 w-24 bg-gray-200 animate-pulse rounded"
+                  className="h-8 md:h-9 w-20 md:w-24 bg-gray-200 animate-pulse rounded flex-shrink-0"
                 />
               ))
             : items.map(item => {
                 const isClickable = ROUTED_SLUGS.includes(item.slug);
 
                 const commonClass =
-                  `relative group text-sm font-medium flex items-center gap-2 py-2 px-1 transition ` +
+                  `relative group text-xs md:text-sm font-medium flex items-center gap-1 md:gap-2 py-2 px-1 transition flex-shrink-0 ` +
                   (activeMegaMenu === item.label
                     ? 'text-purple-600'
                     : 'text-gray-700 hover:text-purple-600');
@@ -299,11 +299,11 @@ export default function Navbar() {
                 const content = (
                   <>
                     {menuIcons[item.label] && (
-                      <span className="group-hover:scale-110 transition">
+                      <span className="group-hover:scale-110 transition text-xs md:text-sm">
                         {menuIcons[item.label]}
                       </span>
                     )}
-                    <span>{item.label}</span>
+                    <span className="truncate">{item.label}</span>
 
                     <span
                       className={`absolute left-0 bottom-0 h-0.5 bg-purple-600 transition-all duration-300 ${
@@ -342,7 +342,11 @@ export default function Navbar() {
         {/* RIGHT ARROW */}
         <button
           onClick={() => scroll('right')}
-          className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow border border-gray-300 transition-all duration-300 `}
+          className={`hidden md:flex absolute right-0 md:right-2 top-1/2 -translate-y-1/2 z-10 w-6 md:w-8 h-6 md:h-8 items-center justify-center bg-white rounded-full shadow border border-gray-300 transition-all duration-300 ${
+            mounted && showRightArrow
+              ? 'opacity-100'
+              : 'opacity-0 pointer-events-none'
+          }`}
         >
           ❯
         </button>
@@ -353,7 +357,7 @@ export default function Navbar() {
         <div
           onMouseEnter={handleMegaEnter}
           onMouseLeave={handleMegaLeave}
-          className="absolute left-0 right-0 top-full z-50 container"
+          className="absolute left-0 right-0 top-full z-50 container hidden md:block"
         >
           <MegaMenu category={activeMegaMenu} isOpen />
         </div>

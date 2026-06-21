@@ -1,5 +1,5 @@
 import { fakeApi } from '@/lib/fakeApi';
-import { toCarouselProduct } from '@/lib/productUtils';
+import { toCarouselProduct, searchWithScore } from '@/lib/productUtils';
 import {
   getAllProducts,
   getProductById,
@@ -42,8 +42,8 @@ export async function getProductByIdService(id) {
 
 export async function searchProducts(query, limit = 20) {
   return fakeApi(() => {
-    const filtered = getFilteredProducts(getAllProducts(), { query });
-    return filtered.slice(0, limit).map(p => ({ ...p, inStock: p.stock > 0 }));
+    const results = searchWithScore(getAllProducts(), query, limit);
+    return results.map(p => ({ ...p, inStock: p.stock > 0 }));
   }, DEFAULT_DELAY);
 }
 
@@ -60,7 +60,10 @@ export async function getFeaturedProducts(limit = 10) {
 export async function getBestSellers(limit = 10) {
   return fakeApi(
     () =>
-      getFilteredProducts(getAllProducts(), { bestSeller: true, sortBy: 'best-sale' })
+      getFilteredProducts(getAllProducts(), {
+        bestSeller: true,
+        sortBy: 'best-sale',
+      })
         .slice(0, limit)
         .map(toCarouselProduct),
     DEFAULT_DELAY,
@@ -70,7 +73,10 @@ export async function getBestSellers(limit = 10) {
 export async function getNewArrivals(limit = 10) {
   return fakeApi(
     () =>
-      getFilteredProducts(getAllProducts(), { newArrival: true, sortBy: 'new-arrival' })
+      getFilteredProducts(getAllProducts(), {
+        newArrival: true,
+        sortBy: 'new-arrival',
+      })
         .slice(0, limit)
         .map(toCarouselProduct),
     DEFAULT_DELAY,
@@ -166,7 +172,10 @@ export async function getBrandProductsService(brand, excludeId, limit = 8) {
 }
 
 export async function getSearchBrands() {
-  return fakeApi(() => [...new Set(getAllProducts().map(p => p.brand))].sort(), 150);
+  return fakeApi(
+    () => [...new Set(getAllProducts().map(p => p.brand))].sort(),
+    150,
+  );
 }
 
 export async function getSearchFilters() {
@@ -175,11 +184,14 @@ export async function getSearchFilters() {
 
 export async function getSearchCategories() {
   return fakeApi(
-    () => getAllProducts().reduce((acc, p) => {
-      const cat = p.subcategory;
-      if (!acc.includes(cat)) acc.push(cat);
-      return acc;
-    }, []).slice(0, 12),
+    () =>
+      getAllProducts()
+        .reduce((acc, p) => {
+          const cat = p.subcategory;
+          if (!acc.includes(cat)) acc.push(cat);
+          return acc;
+        }, [])
+        .slice(0, 12),
     150,
   );
 }

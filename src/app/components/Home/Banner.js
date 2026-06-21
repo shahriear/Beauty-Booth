@@ -142,15 +142,15 @@ export default function Banner() {
   const images = bannerImages || [];
 
   return (
-    <section className="px-6 py-6 relative">
+    <section className="px-3 md:px-6 py-4 md:py-6 relative">
       {/* LOADER */}
       {loading && !bannerCache && (
-        <div className="w-full h-96 bg-gray-200 animate-pulse rounded-xl" />
+        <div className="w-full h-48 md:h-80 lg:h-96 bg-gray-200 animate-pulse rounded-lg md:rounded-xl" />
       )}
 
       {/* SWIPER SLIDER */}
       {images.length > 0 && (
-        <div className="rounded-xl overflow-hidden touch-pan-y">
+        <div className="rounded-lg md:rounded-xl overflow-hidden touch-pan-y">
           <Swiper
             modules={[Autoplay, Navigation, Pagination]}
             spaceBetween={0}
@@ -171,7 +171,7 @@ export default function Banner() {
               return (
                 <SwiperSlide key={index}>
                   <Link href={`/${category}`}>
-                    <div className="w-full h-96">
+                    <div className="w-full h-48 md:h-80 lg:h-96">
                       <img
                         src={image}
                         alt={`Banner ${index}`}

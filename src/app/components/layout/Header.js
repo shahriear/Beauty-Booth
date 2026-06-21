@@ -82,29 +82,17 @@
 //   );
 // }
 
-
-
-
-
-
-
-
-
-
 // 'use client';
 
 // import { useState } from 'react';
 
 // import CartDrawer from '../ui/CartDrawer';
 
-
 // import useCartStore from '../store/useCartStore';
-
 
 // import SearchOverlay from '../ui/search/SearchOverlay';
 
 // import { Search, X } from 'lucide-react';
-
 
 // export default function Header() {
 //   const [searchQuery, setSearchQuery] = useState('');
@@ -202,11 +190,10 @@
 //   );
 // }
 
-
-
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import CartDrawer from '../ui/CartDrawer';
 import SearchOverlay from '../ui/search/SearchOverlay';
@@ -218,6 +205,7 @@ import { Search, X, User, ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Header() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -228,27 +216,42 @@ export default function Header() {
 
   const cartItems = useCartStore(state => state.cartItems);
 
+  const handleSearchSubmit = () => {
+    if (searchQuery.trim()) {
+      setSearchOpen(false);
+      setSearchQuery('');
+      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
+  const handleSearchKeyDown = e => {
+    if (e.key === 'Enter') {
+      handleSearchSubmit();
+    }
+  };
+
   return (
     <>
-      <header className="bg-white shadow-md py-3 px-6 sticky top-0 z-30">
-        <div className="flex items-center justify-between gap-6 container mx-auto">
+      <header className="bg-white shadow-md py-2 md:py-3 px-3 md:px-6 sticky top-0 z-30">
+        <div className="flex items-center justify-between gap-2 md:gap-6 container mx-auto">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-bold">
+            <Link href="/" className="text-lg md:text-2xl font-bold whitespace-nowrap">
               Beauty Booth
             </Link>
           </div>
 
           {/* Search */}
-          <div className="flex-grow max-w-2/5 relative">
-            <div className="flex items-center gap-3 border border-gray-300 rounded-full px-5 py-1 hover:border-gray-500 transition bg-white">
+          <div className="hidden md:flex flex-grow max-w-2xl relative">
+            <div className="flex items-center gap-2 md:gap-3 border border-gray-300 rounded-full px-3 md:px-5 py-1 md:py-2 hover:border-gray-500 transition bg-white w-full">
               <input
                 type="text"
                 placeholder="What are you looking for?"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearchKeyDown}
                 onFocus={() => setSearchOpen(true)}
-                className="flex-1 outline-none bg-transparent text-[16px]"
+                className="flex-1 outline-none bg-transparent text-sm md:text-base"
               />
 
               {searchQuery && (
@@ -263,33 +266,44 @@ export default function Header() {
                 </button>
               )}
 
-              <button className="bg-pink-500 hover:bg-pink-800 text-white p-1.5 rounded-full transition">
-                <Search size={20} />
+              <button
+                onClick={handleSearchSubmit}
+                className="bg-pink-500 hover:bg-pink-600 text-white p-1.5 rounded-full transition"
+              >
+                <Search size={18} />
               </button>
             </div>
           </div>
 
           {/* Right */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2 md:gap-6">
+            {/* Mobile Search Button */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="md:hidden flex items-center justify-center text-gray-700 hover:text-pink-600 transition p-2"
+            >
+              <Search size={20} />
+            </button>
+
             {/* Account */}
             <button
               onClick={() => setAccountOpen(true)}
-              className="flex flex-col items-center text-gray-700 hover:text-pink-600 transition"
+              className="flex flex-col items-center text-gray-700 hover:text-pink-600 transition gap-1"
             >
-              <User size={22} />
-              <span className="text-xs">Account</span>
+              <User size={20} className="md:w-6 md:h-6" />
+              <span className="text-xs hidden sm:inline">Account</span>
             </button>
 
             {/* Cart */}
             <button
               onClick={() => setCartOpen(true)}
-              className="relative flex flex-col items-center text-gray-700 hover:text-purple-600 transition"
+              className="relative flex flex-col items-center text-gray-700 hover:text-purple-600 transition gap-1"
             >
-              <ShoppingCart size={22} />
+              <ShoppingCart size={20} className="md:w-6 md:h-6" />
 
-              <span className="text-xs">Cart</span>
+              <span className="text-xs hidden sm:inline">Cart</span>
 
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 md:w-5 h-4 md:h-5 flex items-center justify-center text-[10px]">
                 {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
               </span>
             </button>
